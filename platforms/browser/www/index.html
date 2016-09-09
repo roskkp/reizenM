@@ -17,7 +17,7 @@
 <!-- <script type="text/javascript" src="js/index.js"></script> -->
 <script id="panel-init">
 var pro_sdno = 1027;
-var reizenUrl = 'http://192.168.0.42:8080/';
+var reizenUrl = 'http://192.168.0.30:8080/';
   $(function() {
 	  $.mobile.ignoreContentEnabled = true;
 	  
@@ -30,14 +30,13 @@ var reizenUrl = 'http://192.168.0.42:8080/';
     });
     
     $('.btn_index_home').on('click', function() {
-        $.mobile.changePage('index.html', {
-          transition : "fade",
-          changeHash : false
-        });
-      });
-    /* $('#btn_index_').on('click', function(){
-    	$('#content').load('spot.html');
-    } */
+    	 $(location).attr('href', 'index.html');
+    });
+    
+    $('#btn_index_search_spot').on('click', function() {
+       $('#content').load('search_spot.html');
+    });
+    
   });
 </script>
 </head>
@@ -59,13 +58,13 @@ var reizenUrl = 'http://192.168.0.42:8080/';
           <a href="#" class="ui-btn ui-icon-search ui-btn-icon-top">일정 만들기</a>
         </div>
         <div class="ui-block-a">
-          <a href="#" class="ui-btn ui-icon-search ui-btn-icon-top">장소 검색</a>
+          <a id="btn_index_search_spot" href="#" class="ui-btn ui-icon-search ui-btn-icon-top">장소 검색</a>
         </div>
         <div class="ui-block-b">
-          <a href="#" class="ui-btn ui-icon-search ui-btn-icon-top">일정 검색</a>
+          <a id="btn_index_search_sc" href="#" class="ui-btn ui-icon-search ui-btn-icon-top">일정 검색</a>
         </div>
         <div class="ui-block-a">
-          <a href="#" class="ui-btn ui-icon-search ui-btn-icon-top">대시보드</a>
+          <a id="btn_index_dash" href="#" class="ui-btn ui-icon-search ui-btn-icon-top">대시보드</a>
         </div>
       </div>
     </div>

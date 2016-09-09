@@ -42,7 +42,7 @@ $(function() {
 	
 	// 메모 알람!
 	$('#content').on('click','.pro_alarm',function(){
-		$(this).removeClass('alarm').removeClass('alarmOn');
+		$(this).removeClass('pro_alarm').removeClass('alarmOn');
 		viewAlarm($(this).attr('data-routeNo'));
 	})
 	
@@ -172,6 +172,13 @@ function getWeather(lat, lon){
 			;
 		}
 	});
+}
+function viewAlarm(routeNo){
+	$.getJSON(reizenUrl+'location/clearMemoAlarm.do?routeNo='+routeNo,function(result){
+		if (result.status != 'success') {
+			console.log('error')
+		}
+	})
 }
 function checkAlarm(){
 	$.ajax({
