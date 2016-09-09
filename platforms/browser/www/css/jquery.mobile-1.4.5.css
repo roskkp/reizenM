@@ -928,6 +928,13 @@ html .ui-alt-icon .ui-radio-off:after {
 	background: url(images/ajax-loader.gif);
 	background-size: 2.875em 2.875em;
 }
+
+
+
+
+/*  theme B  */
+
+
 /* Swatches */
 /* A
 -----------------------------------------------------------------------------------------------------------*/
@@ -937,7 +944,7 @@ html .ui-alt-icon .ui-radio-off:after {
 html .ui-bar-a .ui-bar-inherit,
 html .ui-body-a .ui-bar-inherit,
 html body .ui-group-theme-a .ui-bar-inherit {
-	background-color: 			#e9e9e9 /*{a-bar-background-color}*/;
+	background-color: 			#ffffff /*{a-bar-background-color}*/;
 	border-color:	 		#ddd /*{a-bar-border}*/;
 	color: 					#333 /*{a-bar-color}*/;
 	text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 0 /*{a-bar-shadow-radius}*/ 	#eee /*{a-bar-shadow-color}*/;
@@ -951,11 +958,17 @@ html body .ui-group-theme-a .ui-bar-inherit {
 .ui-overlay-a,
 .ui-page-theme-a,
 .ui-page-theme-a .ui-panel-wrapper {
-	background-color: 			#f9f9f9 /*{a-page-background-color}*/;
+background: #1e5799; /* Old browsers */
+background: -moz-linear-gradient(top, #1e5799 0%, #7db9e8 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #1e5799 0%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #1e5799 0%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+	 /*{a-page-background-color}*/;
 	border-color:	 		#bbb /*{a-page-border}*/;
 	color: 					#333 /*{a-page-color}*/;
 	text-shadow: 0 /*{a-page-shadow-x}*/ 1px /*{a-page-shadow-y}*/ 0 /*{a-page-shadow-radius}*/ 	#f3f3f3 /*{a-page-shadow-color}*/;
 }
+
 /* Body: Read-only lists, text inputs, collapsible content */
 .ui-body-a,
 .ui-page-theme-a .ui-body-inherit,
@@ -998,12 +1011,14 @@ html .ui-body-a a:active,
 html body .ui-group-theme-a a:active {
 	color: #005599 /*{a-link-active}*/;
 }
+
 /* Button up */
 .ui-page-theme-a .ui-btn,
 html .ui-bar-a .ui-btn,
 html .ui-body-a .ui-btn,
 html body .ui-group-theme-a .ui-btn,
 html head + body .ui-btn.ui-btn-a,
+
 /* Button visited */
 .ui-page-theme-a .ui-btn:visited,
 html .ui-bar-a .ui-btn:visited,
@@ -1091,7 +1106,13 @@ html head + body .ui-body-a.ui-focus {
 	-moz-box-shadow: 0 0 12px 		#3388cc /*{a-active-background-color}*/;
 	box-shadow: 0 0 12px 			#3388cc /*{a-active-background-color}*/;
 }
-/* B
+
+
+
+/*  theme B  */
+
+
+/* B     -         black!
 -----------------------------------------------------------------------------------------------------------*/
 /* Bar: Toolbars, dividers, slider track */
 .ui-bar-b,
@@ -1253,6 +1274,15 @@ html head + body .ui-body-b.ui-focus {
 	-moz-box-shadow: 0 0 12px 		#22aadd /*{b-active-background-color}*/;
 	box-shadow: 0 0 12px 			#22aadd /*{b-active-background-color}*/;
 }
+
+
+
+
+
+
+
+
+
 /* Structure */
 /* Disabled
 -----------------------------------------------------------------------------------------------------------*/

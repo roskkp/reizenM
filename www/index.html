@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 <link rel="stylesheet" href="css/jquery.mobile.icons-1.4.5.css" />
 <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.css" />
-<!-- <link rel="stylesheet" href="css/index.css" /> -->
+<link rel="stylesheet" href="css/index.css" />
 <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
 <link rel="stylesheet" href="node_modules/sweetalert/dist/sweetalert.css" />
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -19,7 +19,8 @@
 var pro_sdno = 1027;
 var reizenUrl = 'http://192.168.0.42:8080/';
   $(function() {
-	  $.mobile.ignoreContentEnabled=true;
+	  $.mobile.ignoreContentEnabled = true;
+	  
     $("body>[data-role='panel']").panel();
     
     $('#btn_index_proceeding').on('click', function(){
@@ -27,9 +28,16 @@ var reizenUrl = 'http://192.168.0.42:8080/';
     		$('#content').load('proceeding.html');	
     	}
     });
-    $('.btn_index_home').on('click', function(){
-      $.mobile.changePage('index.html', { transition: "fade", changeHash: false });
-    });
+    
+    $('.btn_index_home').on('click', function() {
+        $.mobile.changePage('index.html', {
+          transition : "fade",
+          changeHash : false
+        });
+      });
+    /* $('#btn_index_').on('click', function(){
+    	$('#content').load('spot.html');
+    } */
   });
 </script>
 </head>
@@ -43,13 +51,13 @@ var reizenUrl = 'http://192.168.0.42:8080/';
 		<!-- /header -->
 
 		<div id="content" data-role="content">
-			<div class="ui-grid-a mainMenus"><!--  ui-responsive 추가 -->
-				<div class="ui-block-a">
-					<a id="btn_index_proceeding" href="#" class="btn_main"><i class="fa fa-calendar-o" aria-hidden="true"></i><br/>진행중인 일정</a>
-				</div>
-				<div class="ui-block-b">
+      <div class="ui-grid-a mainMenus"><!--  ui-responsive 추가 -->
+        <div class="ui-block-a">
+          <a id="btn_index_proceeding" href="#" class="btn_main"><i class="fa fa-calendar-o" aria-hidden="true"></i><br/>진행중인 일정</a>
+        </div>
+        <div class="ui-block-b">
           <a href="#" class="ui-btn ui-icon-search ui-btn-icon-top">일정 만들기</a>
-				</div>
+        </div>
         <div class="ui-block-a">
           <a href="#" class="ui-btn ui-icon-search ui-btn-icon-top">장소 검색</a>
         </div>
@@ -59,13 +67,13 @@ var reizenUrl = 'http://192.168.0.42:8080/';
         <div class="ui-block-a">
           <a href="#" class="ui-btn ui-icon-search ui-btn-icon-top">대시보드</a>
         </div>
-			</div>
-		</div>
-		<!-- /content -->
-	</div>
-	<!-- /page -->
-	
-	<div id="login" data-role="page">
+      </div>
+    </div>
+    <!-- /content -->
+  </div>
+  <!-- /page -->
+  
+  <div id="login" data-role="page">
     <div class="header" data-role="header" data-id="header" data-position="fixed">
       <h1><a class="btn_index_home" data-transition="none">reizen</a></h1>
       <a href="#menu" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-bars">Push</a>
@@ -80,26 +88,27 @@ var reizenUrl = 'http://192.168.0.42:8080/';
         <button id="btn_index_submit" class="ui-btn ui-corner-all">로그인</button>
       </form>
     </div>
-	</div>
-	<!-- panel  -->
-	<div data-role="panel" id="menu" data-position="left"
-		data-display="push" data-theme="b">
-		<div class="index_login">
-		  <a id="btn_index_login" href="#login">로그인</a>
-		</div>
-		<div class="index_profile">
+  </div>
+  <!-- panel  -->
+  <div data-role="panel" id="menu" data-position="left"
+    data-display="push" data-theme="b">
+    <div class="index_login">
+      <a id="btn_index_login" href="#login">로그인</a>
+    </div>
+    <div class="index_profile">
       <h3></h3>
-		</div>
-		<ul class="index_menu">
-			<li class="ui-first-child"><a href="#">진행중인 일정</a></li>
-			<li><a href="#">일정 만들기</a></li>
-			<li><a href="#">대시보드</a></li>
-			<li><a href="#">장소 검색</a></li>
-			<li class="ui-last-child"><a href="#">일정 검색</a></li>
-		</ul>
-		<!--     <a href="#" data-rel="close"
+    </div>
+    <ul class="index_menu">
+      <li><a href="#">진행중인 일정</a></li>
+      <li><a href="#">일정 만들기</a></li>
+      <li><a href="#">대시보드</a></li>
+      <li><a href="#">장소 검색</a></li>
+      <li><a href="#">일정 검색</a></li>
+      <li><a id="btn_index_logout" href="#">로그아웃</a></li>
+    </ul>
+    <!--     <a href="#" data-rel="close"
       class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-nodisc-icon">Close panel</a> -->
-	</div>
-	<!-- /leftpanel2 -->
+  </div>
+  <!-- /leftpanel2 -->
 </body>
 </html>

@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+
+div.header {
+	background-color: #fff;
+}
+
+div.mainMenus > div {
+  	height : 120px;
+}
+
+
+
+a.btn_main {
+	margin: 10px auto;
+	border: none;
+	display: block;
+	text-align: center;
+	border-radius: 100%;
+	width: 100px;
+	height: 100px;
+	background-color: olive;
+}
+
+
+/*============   로그인   ============*/
+
+div.loginWrap {
+	margin : 15px;
+}
