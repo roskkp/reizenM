@@ -1,2 +1,4 @@
 www/node_modules/
 platforms/
+.gradle/
+.project
