@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>reizen</title>
 <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 <link rel="stylesheet" href="css/jquery.mobile.icons-1.4.5.css" />
@@ -10,40 +10,46 @@
 <link rel="stylesheet" href="css/index.css" />
 <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
 <link rel="stylesheet" href="node_modules/sweetalert/dist/sweetalert.css" />
+
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 <script type="text/javascript" src="node_modules/handlebars/dist/handlebars.min.js"></script>
 <script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
-<!-- <script type="text/javascript" src="js/index.js"></script> -->
+<script type="text/javascript" src="js/index.js"></script>
+
 <script id="panel-init">
-var pro_sdno = 1027;
-var reizenUrl = 'http://192.168.0.30:8080/';
+var pro_sdno = 1045;
+var reizenUrl = 'http://reizen.com:8080/';
   $(function() {
 	  $.mobile.ignoreContentEnabled = true;
 	  
     $("body>[data-role='panel']").panel();
     
-    $('#btn_index_proceeding').on('click', function(){
+    $('.btn_index_proceeding').on('click', function(){
     	if( pro_sdno != null ){
     		$('#content').load('proceeding.html');	
     	}
     });
     
-    $('.btn_index_home').on('click', function() {
+    $(document).on('click', '.btn_index_home', function() {
     	 $(location).attr('href', 'index.html');
     });
     
-    $('#btn_index_search_spot').on('click', function() {
+    $('.btn_index_search_spot').on('click', function() {
        $('#content').load('search_spot.html');
+    });
+    
+    $('.btn_index_search_sc').on('click', function() {
+       $('#content').load('search_sc.html');
     });
     
   });
 </script>
 </head>
 <body>
-	<div id="page" data-role="page" data-quicklinks="true" data-fullscreen="true">
+	<div id="page" data-role="page" data-quicklinks="true" data-fullscreen="false">
 
-		<div class="header" data-role="header" data-id="header" data-position="fixed">
+		<div class="header" data-role="header" data-id="header" data-position="fixed" data-tap-toggle="false">
 			<h1><a class="btn_index_home">reizen</a></h1>
 			<a href="#menu" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-bars">Push</a>
 		</div>
@@ -52,19 +58,19 @@ var reizenUrl = 'http://192.168.0.30:8080/';
 		<div id="content" data-role="content">
       <div class="ui-grid-a mainMenus"><!--  ui-responsive 추가 -->
         <div class="ui-block-a">
-          <a id="btn_index_proceeding" href="#" class="btn_main"><i class="fa fa-calendar-o" aria-hidden="true"></i><br/>진행중인 일정</a>
+          <a class="btn_index_proceeding btn_main"><i class="fa fa-calendar-o" aria-hidden="true"></i><br/>진행중인 일정</a>
         </div>
         <div class="ui-block-b">
-          <a href="#" class="ui-btn ui-icon-search ui-btn-icon-top">일정 만들기</a>
+          <a class="btn_index_make ui-btn ui-icon-search ui-btn-icon-top">일정 만들기</a>
         </div>
         <div class="ui-block-a">
-          <a id="btn_index_search_spot" href="#" class="ui-btn ui-icon-search ui-btn-icon-top">장소 검색</a>
+          <a class="btn_index_search_spot ui-btn ui-icon-search ui-btn-icon-top">장소 검색</a>
         </div>
         <div class="ui-block-b">
-          <a id="btn_index_search_sc" href="#" class="ui-btn ui-icon-search ui-btn-icon-top">일정 검색</a>
+          <a class="btn_index_search_sc ui-btn ui-icon-search ui-btn-icon-top">일정 검색</a>
         </div>
         <div class="ui-block-a">
-          <a id="btn_index_dash" href="#" class="ui-btn ui-icon-search ui-btn-icon-top">대시보드</a>
+          <a class="btn_index_dash ui-btn ui-icon-search ui-btn-icon-top">대시보드</a>
         </div>
       </div>
     </div>
@@ -84,7 +90,7 @@ var reizenUrl = 'http://192.168.0.30:8080/';
         <input type="text" name="email" id="email">
         <label for="text-basic">비밀번호</label>
         <input type="password" name="password" id="password">
-        <button id="btn_index_submit" class="ui-btn ui-corner-all">로그인</button>
+        <button id="btn_index_submit" class="ui-btn ui-corner-all" rel="external" data-ajax="false">로그인</button>
       </form>
     </div>
   </div>
@@ -98,11 +104,11 @@ var reizenUrl = 'http://192.168.0.30:8080/';
       <h3></h3>
     </div>
     <ul class="index_menu">
-      <li><a href="#">진행중인 일정</a></li>
-      <li><a href="#">일정 만들기</a></li>
-      <li><a href="#">대시보드</a></li>
-      <li><a href="#">장소 검색</a></li>
-      <li><a href="#">일정 검색</a></li>
+      <li><a class="btn_index_proceeding" href="#">진행중인 일정</a></li>
+      <li><a class="btn_index_make" href="#">일정 만들기</a></li>
+      <li><a class="btn_index_dash" href="#">대시보드</a></li>
+      <li><a class="btn_index_search_spot" href="#">장소 검색</a></li>
+      <li><a class="btn_index_search_sc" href="#">일정 검색</a></li>
       <li><a id="btn_index_logout" href="#">로그아웃</a></li>
     </ul>
     <!--     <a href="#" data-rel="close"
