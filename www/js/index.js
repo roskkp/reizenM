@@ -5,7 +5,7 @@ var dashNo = null;
 
 $(function(){
 	
-	//loginCheck();
+	loginCheck();
     
     $(document).off('click').on('click', '.btn_index_home', function() {
     	 $(location).attr('href', 'index.html');
