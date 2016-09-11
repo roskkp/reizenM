@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="css/dashboard.css" />
+<link rel="stylesheet" href="node_modules/swiper/dist/css/swiper.min.css">
+
+<script src="node_modules/swiper/dist/js/swiper.jquery.min.js"></script>
+<script type="text/javascript" src="js/dashboard.js"></script>
+
+<div id="dash_profile">
+  <div id="dash_thumb"></div>
+  <div id="dash_name">Soohyun Ko</div>
+</div>
+
+
+<div id="dash_tabs" data-role="tabs" data-position="fixed">
+  <div id="dash_navbar" data-role="navbar">
+    <ul>
+      <li><a href="#dash_schedule" data-ajax="false">계획된 일정 (<span></span>)</a></li>
+      <li><a href="#dash_scrap_sc" data-ajax="false">스크랩한 일정 (<span></span>)</a></li>
+      <li><a href="#dash_scrap_spot" data-ajax="false">스크랩한 장소 (<span></span>)</a></li>
+    </ul>
+  </div>
+  <div id="dash_schedule">
+    <ul id="dash_scheduleList" class="dash_list"></ul>
+  </div>
+  <div id="dash_scrap_sc">
+    <ul id="dash_scList" class="dash_list"></ul>
+  </div>
+  <div id="dash_scrap_spot">
+    <ul id="dash_spotList" class="dash_list"></ul>
+  </div>
+</div>
+
+<a id="btn_dash_top" data-ajax="false" data-role="button" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext ui-btn-b ui-nodisc-icon">TOP</a>
+
+<!-- 계획된 일정 -->
+<script id="scheduleList" type="text/x-handlebarsx-template">
+{{#this}}
+<li>
+  <div class="dash_image" style="background-image:url({{thumbImg}})"></div>
+  <div class="dash_content">
+    <h2>{{title}}</h2>
+    <p>{{totalDays}}Days · {{month}}월 여행 · {{peopleCount}}명 · by </span><span class="nick-name" data-dashNo="{{user.dashNo}}">{{user.nickName}}</p>
+  </div>
+</li>
+{{/this}}
+</script>
+
+<!-- 스크랩한 일정 -->
+<script id="scrapScList" type="text/x-handlebarsx-template">
+{{#this}}
+<li>
+  <div class="dash_image" style="background-image:url({{thumbImg}})"></div>
+  <div class="dash_content">
+    <h2>{{title}}</h2>
+    <p>{{totalDays}}Days · {{month}}월 여행 · {{peopleCount}}명 · by </span><span class="nick-name" data-dashNo="{{user.dashNo}}">{{user.nickName}}</p>
+  </div>
+</li>
+{{/this}}
+</script>
+
+<!-- 스크랩한 장소 -->
+<script id="scrapSpotList" type="text/x-handlebarsx-template">
+{{#this}}
+<li>
+  <div class="dash_image" style="background-image:url({{firstImage}})"></div>
+  <div class="dash_content">
+    <h2>{{locateName}}</h2>
+    <p>{{address1}}</p>
+  </div>
+</li>
+{{/this}}
+</script>
