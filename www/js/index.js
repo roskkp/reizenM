@@ -2,16 +2,17 @@ var pro_sdno = 1045;
 var reizenUrl = 'http://192.168.0.42:8080/';
 var routes = [];
 
-var session = false;
+var nickName = null;
+var dashNo = null;
 
 var spot_cid;
 
 $(function(){
-	sessionCheck();
-	$('.index_profile').hide();
-	$(document).on('click', '#btn_index_submit', function(){
+	
+	loginCheck();
+	
+	$('#btn_index_submit').on('click', function(){
 		login();
-		sessionCheck();
 	});
 	$(document).on('click', '#btn_index_proceeding', function(){
 		sessionCheck();
@@ -21,10 +22,50 @@ $(function(){
 //			alert('ㄴㄴ');
 		}
 	});
+	
 	$(document).on('click', '#btn_index_logout', function(){
-		sessionStorage
+		logout();
 	});
+    
+    $(document).on('click', '.btn_index_dash', function() {
+    	loginCheck();
+    	if(dashNo!=null){
+    	    $('#content').load('dashboard.html');
+    	}else{
+    		swal("로그인 필요", "로그인 해주세요.", "warning"); 
+			/*setTimeout(function(){ // 3초뒤 자동 이동
+				$(location).attr('href', 'index.html');
+			},3000);*/
+    	}
+    });
+	
 });
+
+function loginCheck(){
+	console.log('loginCheck');
+	$.ajax({
+		url : reizenUrl+'user/checkUser.do',
+		dataType : 'json',
+		success : function(result){
+			if(result.status='success'){
+				nickName = result.nickName;
+				dashNo = result.dashNo;
+				$('.index_login').hide();
+				$('.index_profile').show();
+				$('.index_profile > h3').text(nickName);
+			}
+		}, error  : function(request,status,error){
+			if(request.status == 800){ // 서버에 세션이 없다면
+				$('.index_profile').hide();
+				$('.index_profile > h3').text();
+				$('.index_login').show();
+//				swal("로그인 필요", "세션이 만료되었습니다. 다시 로그인 해 주세요.", "warning"); 
+			}else{
+//				swal("요청 오류", "잠시후 다시 시도 해 보세요", "warning"); 
+			}
+		}
+	});
+}
 
 function login(){
 	$.ajax({
@@ -34,7 +75,10 @@ function login(){
 		dataType : 'json',
 		success : function(result){
 			if(result.status=='success'){
-				alert('로그인!');
+				nickName = result.user.nickName;
+				$('.index_login').hide();
+				$('.index_profile').show();
+				$('.index_profile > h3').text(nickName);
 			}else{
 				alert('error');
 			}
@@ -48,33 +92,16 @@ function logout(){
 		dataType : 'json',
 		success : function(result){
 			if(result.status=='success'){
-				
+				nickName = null;
+				dashNo = null;
+				$('.index_profile').hide();
+				$('.index_profile > h3').text();
+				$('.index_login').show();
 			}else{
 				alert('error');
 			}
 		}
 	});	// login Ajax
-}
-
-function sessionCheck(){
-	var user = null;
-	
-	if(sessionStorage.length>0){
-		session = true;
-	}else{
-		session = false;
-	}
-	
-	if(session){
-		$('.index_profile').show();
-		$('.index_login').hide();
-		user = sessionStorage.getItem("nickName");
-		console.log(user);
-		$('.index_profile h3').text(user);
-	}else {
-		$('.index_profile').hide();
-		$('.index_login').show();
-	}
 }
 
 function is_integer(x)
