@@ -16,7 +16,6 @@
 <script type="text/javascript" src="node_modules/handlebars/dist/handlebars.min.js"></script>
 <script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-
 <script>
 var pro_sdno = 1045;
 
@@ -31,6 +30,14 @@ var pro_sdno = 1045;
     	}
     });
     
+    $('#btn_index_search_spot').on('click', function() {
+    	spot_cid = $(this).attr('data-cid');
+       $('#content').load('search_spot.html');
+    });
+    
+    $('.btn_index_search_sc').on('click', function() {
+       $('#content').load('search_sc.html');
+    });
   });
 </script>
 </head>

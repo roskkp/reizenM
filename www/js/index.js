@@ -1,7 +1,13 @@
+
 var reizenUrl = "http://192.168.0.30:8080/";
+var pro_sdno = 1045;
+//var reizenUrl = 'http://192.168.0.42:8080/';
+var routes = [];
 
 var nickName = null;
 var dashNo = null;
+
+var spot_cid;
 
 $(function(){
 	
@@ -24,7 +30,6 @@ $(function(){
 	});
 	
     $('#content').on('click', '.btn_index_proceeding', function(){
-		
 	});
 	
     $('#content').on('click', '#btn_index_logout', function(){
@@ -109,4 +114,10 @@ function logout(){
 			}
 		}
 	});	// login Ajax
+}
+
+function is_integer(x)
+{
+    var reg = /^[-|+]?\d+$/;
+    return reg.test(x);
 }
