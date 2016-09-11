@@ -1,21 +1,33 @@
-var reizenUrl = "http://reizen.com:8080/";
+var reizenUrl = "http://192.168.0.30:8080/";
 
 var nickName = null;
 var dashNo = null;
 
 $(function(){
 	
-	loginCheck();
-	
-	$('#btn_index_submit').on('click', function(){
+	//loginCheck();
+    
+    $(document).off('click').on('click', '.btn_index_home', function() {
+    	 $(location).attr('href', 'index.html');
+    });
+    
+    $('#content').on('click', '.btn_index_search_spot', function() {
+       $('#content').load('search_spot.html');
+    });
+    
+    $('#content').on('click', '.btn_index_search_sc', function() {
+       $('#content').load('search_sc.html');
+    });
+    
+    $(document).on('click', '#btn_index_submit',function(){
 		login();
 	});
 	
-	$(document).on('click', '.btn_index_proceeding', function(){
+    $('#content').on('click', '.btn_index_proceeding', function(){
 		
 	});
 	
-	$(document).on('click', '#btn_index_logout', function(){
+    $('#content').on('click', '#btn_index_logout', function(){
 		logout();
 	});
     
@@ -34,7 +46,7 @@ $(function(){
 });
 
 function loginCheck(){
-	console.log('loginCheck');
+	swal('loginCheck');
 	$.ajax({
 		url : reizenUrl+'user/checkUser.do',
 		dataType : 'json',
@@ -60,14 +72,17 @@ function loginCheck(){
 }
 
 function login(){
+	swal('login');
 	$.ajax({
 		url : reizenUrl+'user/login.do',
 		method : 'POST',
 		data : {'email' : $('#email').val(), 'password' : $('#password').val() },
 		dataType : 'json',
+		cache: false,
 		success : function(result){
 			if(result.status=='success'){
 				nickName = result.user.nickName;
+				swal(nickName);
 				$('.index_login').hide();
 				$('.index_profile').show();
 				$('.index_profile > h3').text(nickName);

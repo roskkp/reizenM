@@ -17,9 +17,9 @@
 <script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 
-<script id="panel-init">
+<script>
 var pro_sdno = 1045;
-var reizenUrl = 'http://reizen.com:8080/';
+
   $(function() {
 	  $.mobile.ignoreContentEnabled = true;
 	  
@@ -29,18 +29,6 @@ var reizenUrl = 'http://reizen.com:8080/';
     	if( pro_sdno != null ){
     		$('#content').load('proceeding.html');	
     	}
-    });
-    
-    $(document).on('click', '.btn_index_home', function() {
-    	 $(location).attr('href', 'index.html');
-    });
-    
-    $('.btn_index_search_spot').on('click', function() {
-       $('#content').load('search_spot.html');
-    });
-    
-    $('.btn_index_search_sc').on('click', function() {
-       $('#content').load('search_sc.html');
     });
     
   });
