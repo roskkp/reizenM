@@ -14,10 +14,8 @@
 <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 <script type="text/javascript" src="node_modules/handlebars/dist/handlebars.min.js"></script>
 <script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
-<!-- <script type="text/javascript" src="js/index.js"></script> -->
+<script type="text/javascript" src="js/index.js"></script>
 <script id="panel-init">
-var pro_sdno = 1027;
-var reizenUrl = 'http://192.168.0.30:8080/';
   $(function() {
 	  $.mobile.ignoreContentEnabled = true;
 	  
@@ -30,10 +28,11 @@ var reizenUrl = 'http://192.168.0.30:8080/';
     });
     
     $('.btn_index_home').on('click', function() {
-    	 $(location).attr('href', 'index.html');
+    	 $(location).attr('href', '');
     });
     
     $('#btn_index_search_spot').on('click', function() {
+    	spot_cid = $(this).attr('data-cid');
        $('#content').load('search_spot.html');
     });
     

@@ -1,6 +1,10 @@
-var reizenUrl = "http://reizen.com:8080/";
+var pro_sdno = 1045;
+var reizenUrl = 'http://192.168.0.42:8080/';
+var routes = [];
 
 var session = false;
+
+var spot_cid;
 
 $(function(){
 	sessionCheck();
@@ -14,7 +18,7 @@ $(function(){
 		if(session){
 			alert('이동');
 		}else{
-			alert('ㄴㄴ');
+//			alert('ㄴㄴ');
 		}
 	});
 	$(document).on('click', '#btn_index_logout', function(){
@@ -71,4 +75,10 @@ function sessionCheck(){
 		$('.index_profile').hide();
 		$('.index_login').show();
 	}
+}
+
+function is_integer(x)
+{
+    var reg = /^[-|+]?\d+$/;
+    return reg.test(x);
 }
