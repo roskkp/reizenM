@@ -7,11 +7,6 @@ var scrapListTemplate =null;
 
 $(function(){
 	
-	getProfile();
-	
-	$('#dash_tabs').tabs();
-	$('#dash_navbar').navbar();
-	
 	scheduleListSource = $('#scheduleList').text();
 	scheduleListTemplate = Handlebars.compile(scheduleListSource);
 	scrapListSource = $('#scrapScList').text();
@@ -20,7 +15,9 @@ $(function(){
 	locationListTemplate = Handlebars.compile(locationListSource);
 	
 	refresh();
-	
+
+	$('#dash_tabs').tabs();
+	$('#dash_navbar').navbar();
 	$(document).on('click','.nick-name',function(e){ // 닉네임 클릭하면 해당 회원 dashboard로 가게
 		location.href='dashboard.html?no='+$(this).attr("data-dashNo");
 		e.preventDefault();
@@ -45,6 +42,7 @@ $(function(){
 });
 
 function getProfile(){
+	swal('dash entry :: '+dashNo);
 	$.getJSON(reizenUrl+'dashboard/getDash.do?boardNo='+dashNo, function(result){
 		if(result.status=='success'){
 			$('#dash_name').text(result.user.nickName);

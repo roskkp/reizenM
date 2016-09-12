@@ -10,13 +10,21 @@ var spot_cid;
 
 $(function(){
 	
-	loginCheck();
+	$('#content').load('main.html');
     
     $(document).off('click').on('click', '.btn_index_home', function() {
-    	 $(location).attr('href', 'index.html');
+    	 $(location).attr('href', '/');
     });
     
-    $(document).on('click', '#btn_index_submit',function(){
+    $(document).on('click', '#btn_index_login',function(){
+    	$('#content').load('login.html');
+	});
+    
+    $(document).on('click', '#btn_index_submit',function(e){
+    	e.preventDefault();
+		$('.index_login').hide();
+		$('.index_profile').show();
+		$('.index_profile > h3').text(nickName);
 		login();
 	});
 	
@@ -35,20 +43,16 @@ $(function(){
     $(document).on('click', '.btn_index_proceeding', function(){
     	if( pro_sdno != null ){
     		swal('okok : '+pro_sdno);
-    		$('#content').load('/proceeding.html');
+    		$('#content').load('proceeding.html');
     	}
     });
 	
     $(document).on('click', '.btn_index_dash', function() {
-    	loginCheck();
-		dashNo=1027;
     	if(dashNo!=null){
-    	    $('#content').load('dashboard.html');
+    		swal('dash click')
+    	    $('.index_content').load('dashboard.html');
     	}else{
     		swal("로그인 필요", "로그인 해주세요.", "warning"); 
-			/*setTimeout(function(){ // 3초뒤 자동 이동
-				$(location).attr('href', 'index.html');
-			},3000);*/
     	}
     });
 	
@@ -56,8 +60,6 @@ $(function(){
 
 function loginCheck(){
 	console.log('loginCheck');
-//	console.log("session : "+sessionStorage.getItem("nickName"));
-//	console.log("local : "+localStorage.getItem("nickName"));
 	swal("session : "+sessionStorage.getItem("nickName"));
 	swal("local : "+localStorage.getItem("nickName"));
 	/*$.ajax({
@@ -101,20 +103,16 @@ function login(){
 		method : 'POST',
 		data : {'email' : $('#email').val(), 'password' : $('#password').val() },
 		dataType : 'json',
-		cache: false,
 		success : function(result){
 			if(result.status=='success'){
 				swal('succes');
 				nickName = result.user.nickName;
 				pro_sdno = result.activeScheduleNo[0].scheduleNo;
-				$('.index_login').hide();
-				$('.index_profile').show();
-				$('.index_profile > h3').text(nickName);
 				dashNo = result.user.dashNo;
 				sessionStorage.setItem("nickName", nickName);
 				localStorage.setItem("nickName", nickName);
-//				$(location).attr('href', 'index.html');
-				$.mobile.changePage($("#page"));
+//				$.mobile.changePage($("#page"));
+				$('#content').load('main.html');
 			}else{
 				swal('error');
 			}
