@@ -34,7 +34,7 @@
 <!-- 계획된 일정 -->
 <script id="scheduleList" type="text/x-handlebarsx-template">
 {{#this}}
-<li>
+<li data-no="{{scheduleNo}}">
   <div class="dash_image" style="background-image:url({{thumbImg}})"></div>
   <div class="dash_content">
     <h2>{{title}}</h2>

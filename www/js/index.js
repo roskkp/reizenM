@@ -5,12 +5,13 @@ var routes = [];
 
 var nickName = null;
 var dashNo = null;
+var scheduleNo = null;
 
 var spot_cid;
 
 $(function(){
 	
-	$('#content').load('main.html');
+	$('#content').load('post.html');
     
     $(document).off('click').on('click', '.btn_index_home', function() {
     	 $(location).attr('href', '/');
@@ -48,6 +49,7 @@ $(function(){
     });
 	
     $(document).on('click', '.btn_index_dash', function() {
+    	dashNo=1027;
     	if(dashNo!=null){
     		swal('dash click')
     	    $('.index_content').load('dashboard.html');

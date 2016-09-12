@@ -18,6 +18,7 @@ $(function(){
 
 	$('#dash_tabs').tabs();
 	$('#dash_navbar').navbar();
+	
 	$(document).on('click','.nick-name',function(e){ // 닉네임 클릭하면 해당 회원 dashboard로 가게
 		location.href='dashboard.html?no='+$(this).attr("data-dashNo");
 		e.preventDefault();
@@ -25,6 +26,11 @@ $(function(){
     
 	$('#content').off('click').on('click', '#btn_dash_top', function(){
 		$('body,html').animate({scrollTop:0},800);
+	});
+	
+	$('#content').on('click', '#dash_scheduleList > li', function(){
+		scheduleNo = $(this).data('no');
+		$('#content').load('post.html');
 	});
 	
 	$('#dash_navbar').css('width', $(document).width());
