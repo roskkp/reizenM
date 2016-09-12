@@ -7,27 +7,27 @@
 <!-- grid-a : 2칸 나누기 ... grid-d : 5칸 나누기 / MAX 5칸 -->
 <div class="ui-grid-d">
 	<div class="ui-block-a">
-		<div class="category">
+		<div id="btnHotel" class="category" data-cate="B02">
 			<i class="fa fa-bed fa-2x icons" aria-hidden="true"></i>
 		</div>
 	</div>
 	<div class="ui-block-b">
-		<div class="category">
+		<div id="btnEat" class="category" data-cate="A05">
 			<i class="fa fa-cutlery fa-2x icons" aria-hidden="true"></i>
 		</div>
 	</div>
 	<div class="ui-block-c">
-		<div class="category">
+		<div id="btnSpot" class="category" data-cate="A01">
 		<i class="fa fa-camera fa-2x icons" aria-hidden="true"></i>
 		</div>
 	</div>
 	<div class="ui-block-d">
-		<div class="category">
+		<div id="btnLeports" class="category" data-cate="A03">
 			<i class="fa fa-bicycle fa-2x icons" aria-hidden="true"></i>
 		</div>
 	</div>
 	<div class="ui-block-e">
-		<div class="category">
+		<div id="btnShop" class="category" data-cate="A04">
 			<i class="fa fa-shopping-bag fa-2x icons" aria-hidden="true"></i>
 		</div>
 	</div>
@@ -35,12 +35,12 @@
 </div><!-- /grid-d -->
 <div class="ui-grid-a">
 	<div class="ui-block-a">
-		<div class="category">
+		<div id="btnFestival" class="category" data-cate="A0207">
 			<i class="fa fa-star fa-2x icons" aria-hidden="true"></i>
 		</div>
 	</div>
 	<div class="ui-block-b">
-		<div class="category">
+		<div id="btnScrap" class="category">
 			<i class="fa fa-paperclip fa-2x icons" aria-hidden="true"></i>
 		</div>
 	</div>
@@ -50,7 +50,11 @@
 
 <div id="resultList" class="ui-grid-a">
 </div><!-- /grid-a -->
-
+<div class="radiusWrap">
+ <a id="btnPrev" href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+     총 <span class="resultCount"></span>개 결과
+ <a id="btnNext" href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+</div>
 <script id="searchResult" type="text/x-handlebarsx-template">
 {{#data}}
 {{#if ab}}
@@ -58,8 +62,11 @@
 	<div class="contentWrap" data-contentid={{contentId}}>
 		<div><img class="resultImg" alt="여행지 이미지" src="{{firstImage}}" /></div>
 		<div class="resultText">
-			<div class="ellipsis">{{locateName}}</div>
-			<div class="infoText">{{distance}}km  <i class="fa fa-heart icon" aria-hidden="true"></i>{{recommandCount}}<i class="fa fa-paperclip icon" aria-hidden="true"></i>{{scrapCount}}</div>
+			<h2 class="ellipsis">{{locateName}}</h2>
+			<div class="informaition">
+				<p class="infoText"><i class="fa fa-heart icon" aria-hidden="true"></i>&nbsp;{{recommandCount}}&nbsp;<i class="fa fa-paperclip icon" aria-hidden="true"></i>&nbsp;{{scrapCount}}</p>
+				<p class="distance">>{{distance}}Km</p>
+			</div>
 		</div>
 	</div>
 </div>
