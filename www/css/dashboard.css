@@ -8,6 +8,11 @@ div#dash_profile {
   height: 120px;
 }
 
+div#dash_name {
+	color: #fff;
+	font-weight: bold;
+}
+
 div#dash_thumb {
 	width: 90px;
 	height: 90px;
@@ -19,8 +24,11 @@ div#dash_thumb {
 /*============   tabs   ============*/
 
 #dash_navbar {
-	
+  	left: 0px;
 }
+
+
+
 
 ul.dash_list {
   list-style: none;	
@@ -53,6 +61,8 @@ div.dash_image {
 
 div.dash_content > h2 {
 	font-size: 0.9em;
+	color: #fff;
+	font-weight: bold;
 }
 
 div.dash_content > p {

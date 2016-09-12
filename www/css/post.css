@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+
+
+div#post_title {
+	width: 100%;
+	height: auto;
+  color: #fff;
+}
+
+div#post_thumb {
+	float: left;
+	width: 30%;
+}
+
+div#post_title > h2, div#post_title > h3, div#post_title > h4 {
+	
+}
+
+ul#post_content{
+  color: #fff;	
+  list-style: none;
+  margin: 0; padding: 0;
+}
+
+li.post_day {
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+li.post_list {
+  border: 1px solid rgba(255, 255, 255, 0.8);	
+}
