@@ -41,6 +41,7 @@ $(function(){
 	
     $(document).on('click', '.btn_index_dash', function() {
     	loginCheck();
+		dashNo=1027;
     	if(dashNo!=null){
     	    $('#content').load('dashboard.html');
     	}else{
