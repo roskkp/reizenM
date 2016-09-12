@@ -1,5 +1,5 @@
 //var reizenUrl = "http://192.168.0.30:8080/";
-var pro_sdno;
+var pro_sdno = "";
 var reizenUrl = 'http://192.168.0.42:8080/';
 var routes = [];
 
@@ -44,8 +44,19 @@ $(function(){
 	
     $(document).on('click', '.btn_index_proceeding', function(){
     	if( pro_sdno != null ){
-    		swal('okok : '+pro_sdno);
-    		$('#content').load('proceeding.html');
+    		var btn = "";
+    		console.log(pro_sdno);
+    		var datas = pro_sdno.split(",");
+    		console.log(datas.length);
+    		if (pro_sdno.split(",").length != -1) {
+    			swal("진행중인 일정이 2개 이상 있습니다.");
+    			$('.sweet-alert').addClass('showSweetAlert visible');
+			} else {
+	    		swal("진행중인 일정이 1개 있습니다.");
+	    		$('#content').load('proceeding.html');	
+			}
+    	} else {
+    		swal("진행중인 일정이 없습니다.");
     	}
     });
 	
@@ -65,8 +76,6 @@ $(function(){
 });
 
 function loginCheck(){
-//	console.log('loginCheck');
-	console.log("local : "+localStorage.getItem("nickName"));
 	swal("local : "+localStorage.getItem("nickName"));
 }
 
@@ -78,14 +87,19 @@ function login(){
 		dataType : 'json',
 		success : function(result){
 			if(result.status=='success'){
-				swal(result.jsid);
 				nickName = result.user.nickName;
 				pro_sdno = result.activeScheduleNo[0].scheduleNo;
+				if (result.activeScheduleNo.length > 2) {
+					for (var i = 1; i < result.activeScheduleNo.length; i++) {
+						pro_sdno += ","+result.activeScheduleNo[0].scheduleNo;
+					}	
+				}
+				
 				dashNo = result.user.dashNo;
-				localStorage.setItem('jsid',result.jsid);
-				sessionStorage.setItem("nickName", nickName);
 				localStorage.setItem("nickName", nickName);
-//				$.mobile.changePage($("#page"));
+				localStorage.setItem("email", email);
+				localStorage.setItem("dashNo", dashNo);
+				localStorage.setItem("pro_sdno", pro_sdno);
 				$('#content').load('main.html');
 			}else{
 				swal('error');
