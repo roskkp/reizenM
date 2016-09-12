@@ -17,6 +17,14 @@ $(function(){
     	 $(location).attr('href', 'index.html');
     });
     
+    $(document).on('click', '#btn_index_submit',function(){
+		login();
+	});
+	
+    $(document).on('click', '#btn_index_logout', function(){
+		logout();
+	});
+    
     $('#content').on('click', '.btn_index_search_spot', function() {
        $('#content').load('search_spot.html');
     });
@@ -24,16 +32,8 @@ $(function(){
     $('#content').on('click', '.btn_index_search_sc', function() {
        $('#content').load('search_sc.html');
     });
-    
-    $(document).on('click', '#btn_index_submit',function(){
-		login();
-	});
 	
     $('#content').on('click', '.btn_index_proceeding', function(){
-	});
-	
-    $('#content').on('click', '#btn_index_logout', function(){
-		logout();
 	});
     
     $(document).on('click', '.btn_index_dash', function() {
@@ -51,33 +51,48 @@ $(function(){
 });
 
 function loginCheck(){
-	swal('loginCheck');
-	$.ajax({
+	console.log('loginCheck');
+//	console.log("session : "+sessionStorage.getItem("nickName"));
+//	console.log("local : "+localStorage.getItem("nickName"));
+	swal("session : "+sessionStorage.getItem("nickName"));
+	swal("local : "+localStorage.getItem("nickName"));
+	/*$.ajax({
 		url : reizenUrl+'user/checkUser.do',
+		method : 'GET',
 		dataType : 'json',
 		success : function(result){
-			if(result.status='success'){
-				nickName = result.nickName;
-				dashNo = result.dashNo;
-				$('.index_login').hide();
-				$('.index_profile').show();
-				$('.index_profile > h3').text(nickName);
+			if(result.status=='success'){
+				if(result.nickName!=null){
+					nickName = result.nickName;
+					dashNo = result.dashNo;
+					alert(nickName+', '+dashNo);
+					$('.index_login').hide();
+					$('.index_profile').show();
+					$('.index_profile > h3').text(nickName);
+				}else{
+					$('.index_profile').hide();
+					$('.index_profile > h3').text();
+					$('.index_login').show();
+				}
+			}else{
+				alert('error');
 			}
-		}, error  : function(request,status,error){
+		}*/
+/*		}, error  : function(request,status,error){
 			if(request.status == 800){ // 서버에 세션이 없다면
 				$('.index_profile').hide();
 				$('.index_profile > h3').text();
 				$('.index_login').show();
-//				swal("로그인 필요", "세션이 만료되었습니다. 다시 로그인 해 주세요.", "warning"); 
+				swal("로그인 필요", "세션이 만료되었습니다. 다시 로그인 해 주세요.", "warning"); 
 			}else{
-//				swal("요청 오류", "잠시후 다시 시도 해 보세요", "warning"); 
+				swal("요청 오류", "잠시후 다시 시도 해 보세요", "warning"); 
 			}
 		}
-	});
+	});*/
 }
 
 function login(){
-	swal('login');
+	console.log('login');
 	$.ajax({
 		url : reizenUrl+'user/login.do',
 		method : 'POST',
@@ -87,10 +102,16 @@ function login(){
 		success : function(result){
 			if(result.status=='success'){
 				nickName = result.user.nickName;
-				swal(nickName);
+				dashNo = result.user.dashNo;
 				$('.index_login').hide();
 				$('.index_profile').show();
 				$('.index_profile > h3').text(nickName);
+				console.log(nickName);
+				console.log(dashNo);
+				sessionStorage.setItem("nickName", nickName);
+				localStorage.setItem("nickName", nickName);
+//				$(location).attr('href', 'index.html');
+				$.mobile.changePage($("#page"));
 			}else{
 				alert('error');
 			}
