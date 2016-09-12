@@ -1,13 +1,68 @@
+<link rel="stylesheet" href="css/search.css" />
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=geometry&key=AIzaSyB8Z6lI6WjzkphJ-gFAxYVtokVaNo2I3zw&sensor=false&callback=initialize"></script>
 <script type="text/javascript" src="js/search.js"></script>
 
-<input id="keyword" type="search" name="search" value="" placeholder="검색어를 입력하세요">
 
-<ul id="spot_category" data-role="listview"data-inset="true">
-  <li data-role="list-divider">카테고리 선택</li>
-  <li><a id="spot_nature" href="#">자연</a></li>
-  <li><a href="#">문화</a></li>
-  <li><a href="#">레포츠</a></li>
-  <li><a href="#">쇼핑</a></li>
-  <li><a href="#">음식</a></li>
-  <li><a href="#">숙박</a></li>
-</ul>
+<input id="keyword" type="search" name="search" value="" placeholder="검색어를 입력하세요">
+<!-- grid-a : 2칸 나누기 ... grid-d : 5칸 나누기 / MAX 5칸 -->
+<div class="ui-grid-d">
+	<div class="ui-block-a">
+		<div class="category">
+			<i class="fa fa-bed fa-2x icons" aria-hidden="true"></i>
+		</div>
+	</div>
+	<div class="ui-block-b">
+		<div class="category">
+			<i class="fa fa-cutlery fa-2x icons" aria-hidden="true"></i>
+		</div>
+	</div>
+	<div class="ui-block-c">
+		<div class="category">
+		<i class="fa fa-camera fa-2x icons" aria-hidden="true"></i>
+		</div>
+	</div>
+	<div class="ui-block-d">
+		<div class="category">
+			<i class="fa fa-bicycle fa-2x icons" aria-hidden="true"></i>
+		</div>
+	</div>
+	<div class="ui-block-e">
+		<div class="category">
+			<i class="fa fa-shopping-bag fa-2x icons" aria-hidden="true"></i>
+		</div>
+	</div>
+	
+</div><!-- /grid-d -->
+<div class="ui-grid-a">
+	<div class="ui-block-a">
+		<div class="category">
+			<i class="fa fa-star fa-2x icons" aria-hidden="true"></i>
+		</div>
+	</div>
+	<div class="ui-block-b">
+		<div class="category">
+			<i class="fa fa-paperclip fa-2x icons" aria-hidden="true"></i>
+		</div>
+	</div>
+	<span id=lat></span> 
+	<span id=lng></span>
+</div><!-- /grid-a -->
+
+<div id="resultList" class="ui-grid-a">
+</div><!-- /grid-a -->
+
+<script id="searchResult" type="text/x-handlebarsx-template">
+{{#data}}
+{{#if ab}}
+<div class="ui-block-{{ab}} resultCard">
+	<div class="contentWrap" data-contentid={{contentId}}>
+		<div><img class="resultImg" alt="여행지 이미지" src="{{firstImage}}" /></div>
+		<div class="resultText">
+			<div class="ellipsis">{{locateName}}</div>
+			<div class="infoText">{{distance}}km  <i class="fa fa-heart icon" aria-hidden="true"></i>{{recommandCount}}<i class="fa fa-paperclip icon" aria-hidden="true"></i>{{scrapCount}}</div>
+		</div>
+	</div>
+</div>
+{{/if}}
+{{/data}}
+</script>
