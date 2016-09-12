@@ -19,7 +19,7 @@
 <script>
   $(function() {
 	 /*  $.mobile.ignoreContentEnabled = true; */
-	  
+	 
     $("body>[data-role='panel']").panel();
     
     $('#btn_index_search_spot').on('click', function() {
@@ -43,6 +43,7 @@
 		<!-- /header -->
 
 		<div id="content" data-role="content" class="index_content">
+      
     </div>
     <!-- /content -->
   </div>
@@ -57,7 +58,7 @@
     <div class="index_profile">
       <h3></h3>
     </div>
-    <ul class="index_menu">
+    <ul class="index_menu" data-role="listview">
       <li><a class="btn_index_proceeding" href="#">진행중인 일정</a></li>
       <li><a class="btn_index_make" href="#">일정 만들기</a></li>
       <li><a class="btn_index_dash" href="#">대시보드</a></li>

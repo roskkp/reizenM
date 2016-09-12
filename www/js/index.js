@@ -5,15 +5,13 @@ var routes = [];
 
 var nickName = null;
 var dashNo = null;
+var scheduleNo = null;
 
 var spot_cid;
 
 $(function(){
 	
 	$('#content').load('main.html');
-	
-	loginCheck();
-    
     $(document).off('click').on('click', '.btn_index_home', function() {
     	 $(location).attr('href', '/');
     });
@@ -61,15 +59,12 @@ $(function(){
     });
 	
     $(document).on('click', '.btn_index_dash', function() {
-    	//loginCheck();
+    	dashNo=1027;
     	if(dashNo!=null){
     		swal('dash click')
     	    $('.index_content').load('dashboard.html');
     	}else{
     		swal("로그인 필요", "로그인 해주세요.", "warning"); 
-			/*setTimeout(function(){ // 3초뒤 자동 이동
-				$(location).attr('href', 'index.html');
-			},3000);*/
     	}
     });
 	
