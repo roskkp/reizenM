@@ -23,9 +23,9 @@ function initMap(){
 	
 	var spots = [];
 
-	for(var i=0; i<routes.length; i++){
-		var map1 = parseFloat(routes[i].mapY);
-		var map2 = parseFloat(routes[i].mapX);
+	for(var i=0; i<pro_routes.length; i++){
+		var map1 = parseFloat(pro_routes[i].mapY);
+		var map2 = parseFloat(pro_routes[i].mapX);
 		spots[i]={
 				lat: map1, 
 				lng: map2

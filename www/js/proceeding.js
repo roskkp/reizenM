@@ -1,11 +1,11 @@
-var day = 0;
-var totalPage;
-var	currentDate;
-var alarm = true;
-var routes = [];
+var pro_day = 0;
+var pro_totalPage;
+var	pro_currentDate;
+var pro_alarm = true;
+var pro_routes = [];
 
 $(function() {
-	
+	swal('proceeding entry');
 	$("body>[data-role='panel']").panel();
 
 	$('.pro_weather').load("weather.html");
@@ -26,16 +26,16 @@ $(function() {
 	})
 	
 	$('#content').on('click','.pro_move_dayR',function(){
-		if (day != totalPage) {
-			day++;
+		if (pro_day != pro_totalPage) {
+			pro_day++;
 			listAjax();	
 		} else {
 			swal("End of plan", "더 이상 계획된 일정이 없습니다. ", "warning");
 		}
 	})
 	$('#content').on('click','.pro_move_dayL',function(){
-		if (day != 1) {
-			day--;
+		if (pro_day != 1) {
+			pro_day--;
 			listAjax();	
 		} else {
 			swal("First Day", "첫째날 입니다.", "warning");
@@ -78,12 +78,12 @@ $(function() {
 	})
 	
 	setInterval(() => {
-		if (alarm) {
+		if (pro_alarm) {
 			$('.pro_alarm').addClass('pro_alarmOn',100);	
-			alarm = false;
+			pro_alarm = false;
 		} else {
 			$('.pro_alarm').removeClass('pro_alarmOn',100);
-			alarm = true;
+			pro_alarm = true;
 		}
 			
 	}, 1000);
@@ -94,7 +94,7 @@ $(function() {
 //<!-- ajax 부분 -->
 function listAjax(){
 	var dayInfo = '';
-	if (day != 0) {
+	if (pro_day != 0) {
 		dayInfo = '&day='+day;
 	};
 	$.ajax({
@@ -103,16 +103,16 @@ function listAjax(){
 		method: 'get',
 		success: function(result){
 			if (result.total != null) {
-				totalPage = result.total;
-		      	currentDate = new Date();	
+				pro_totalPage = result.total;
+				pro_currentDate = new Date();	
 			}
-			routes = new Array();
+			pro_routes = new Array();
 			for (var i = 0; i < result.list.length; i++) {
 				var route = new Object();
 				route.no = result.list[i].routeNo;
 				route.mapX = result.list[i].location.mapX;
 				route.mapY = result.list[i].location.mapY;
-				routes.push(route);
+				pro_routes.push(route);
 			}
 	      	var pro_routeBoxSource = $('#pro_routeBox').text();
 			var pro_routeBoxTemplate = Handlebars.compile(pro_routeBoxSource);
@@ -151,7 +151,7 @@ function listAjax(){
 				}
 			};
 			console.log(result);
-			day = result.list[0].day;
+			pro_day = result.list[0].day;
 			$('.pro_day').text('day '+result.list[0].day);
 			$('.pro_listview').empty().append(pro_routeBoxTemplate(result));
 			$( ".pro_listview" ).listview();

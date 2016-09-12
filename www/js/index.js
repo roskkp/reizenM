@@ -1,7 +1,6 @@
-
-var reizenUrl = "http://192.168.0.30:8080/";
-var pro_sdno = 1045;
-//var reizenUrl = 'http://192.168.0.42:8080/';
+//var reizenUrl = "http://192.168.0.30:8080/";
+var pro_sdno;
+var reizenUrl = 'http://192.168.0.42:8080/';
 var routes = [];
 
 var nickName = null;
@@ -29,8 +28,12 @@ $(function(){
 		login();
 	});
 	
-    $('#content').on('click', '.btn_index_proceeding', function(){
-	});
+    $(document).on('click', '.btn_index_proceeding', function(){
+    	if( pro_sdno != null ){
+    		swal('okok : '+pro_sdno);
+    		$('#content').load('/proceeding.html');
+    	}
+    });
 	
     $('#content').on('click', '#btn_index_logout', function(){
 		logout();
@@ -56,12 +59,14 @@ function loginCheck(){
 		url : reizenUrl+'user/checkUser.do',
 		dataType : 'json',
 		success : function(result){
-			if(result.status='success'){
+			if(result.status == 'success'){
 				nickName = result.nickName;
 				dashNo = result.dashNo;
 				$('.index_login').hide();
 				$('.index_profile').show();
 				$('.index_profile > h3').text(nickName);
+			} else if ( result.status == 'no session'){
+				swal("세션이 없음","..");
 			}
 		}, error  : function(request,status,error){
 			if(request.status == 800){ // 서버에 세션이 없다면
@@ -77,7 +82,6 @@ function loginCheck(){
 }
 
 function login(){
-	swal('login');
 	$.ajax({
 		url : reizenUrl+'user/login.do',
 		method : 'POST',
@@ -86,13 +90,17 @@ function login(){
 		cache: false,
 		success : function(result){
 			if(result.status=='success'){
+				swal('succes');
+				console.log(result)
 				nickName = result.user.nickName;
-				swal(nickName);
+				pro_sdno = result.activeScheduleNo[0].scheduleNo;
+				console.log(pro_sdno);
 				$('.index_login').hide();
 				$('.index_profile').show();
 				$('.index_profile > h3').text(nickName);
+				$.mobile.changePage($("#page"));
 			}else{
-				alert('error');
+				swal('error');
 			}
 		}
 	});	// login Ajax

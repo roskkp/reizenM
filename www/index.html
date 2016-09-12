@@ -17,18 +17,10 @@
 <script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script>
-var pro_sdno = 1045;
-
   $(function() {
 	  $.mobile.ignoreContentEnabled = true;
 	  
     $("body>[data-role='panel']").panel();
-    
-    $('.btn_index_proceeding').on('click', function(){
-    	if( pro_sdno != null ){
-    		$('#content').load('proceeding.html');	
-    	}
-    });
     
     $('#btn_index_search_spot').on('click', function() {
     	spot_cid = $(this).attr('data-cid');
@@ -50,7 +42,7 @@ var pro_sdno = 1045;
 		</div>
 		<!-- /header -->
 
-		<div id="content" data-role="content">
+		<div id="content" data-role="content" class="index_content">
       <div class="ui-grid-a mainMenus"><!--  ui-responsive 추가 -->
         <div class="ui-block-a">
           <a class="btn_index_proceeding btn_main"><i class="fa fa-calendar-o" aria-hidden="true"></i><br/>진행중인 일정</a>
