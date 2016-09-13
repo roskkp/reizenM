@@ -12,7 +12,7 @@ $(function(){
 
 	$('#scrap ,#like').on('click',function(){
 		var $this = $(this);
-		if($this.data('active') != 'true'){ // 기 추천 기록이 없다면
+		if($this.attr('data-active') != 'true'){ // 기 추천 기록이 없다면
 			if($this.attr('id')=='scrap'){
 				changeStatus('addScrap');
 			}else{
@@ -32,8 +32,6 @@ $(function(){
 });
 
 function init(){
-	console.log(spot_typeId);
-	console.log(spot_cid);
 	var path = $('#baseSparql').text() + spot_cid;
 	switch (spot_typeId) {
 	case 12:
@@ -92,7 +90,6 @@ function searchInfo(path, cid) {
 					$('#overviewBox').html('<br/>'+value.value+'<br/>');
 				} else if(key == 'img'){
 					console.log('img');
-					
 				}
 			});
 			dataMap.put("data", realData);
@@ -196,7 +193,7 @@ function checkStatus(){
 function changeStatus(command){
 	var url = null;
 	var nick = localStorage.getItem("nickName");
-	if(nick){
+	if(nick == null){
 		swal('로그인이 필요한 작업입니다').
 		return;
 	}
@@ -206,10 +203,13 @@ function changeStatus(command){
 		break;
 	case 'delScrap':
 		url = 'location/delScrap.do?cid='+spot_cid;
+		break;
 	case 'addRecm':
 		 url =  'location/addRecm.do?nick='+nick+'&cid='+spot_cid;
+		 break;
 	case 'delRecm':
 		url = 'location/delRecm.do?cid='+spot_cid;
+		break;
 	}
     $.ajax({
         url : reizenUrl + url,

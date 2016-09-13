@@ -2,7 +2,7 @@
 var pro_sdno = "";
 var pro_sdnos = "";
 var pro_sdnot = "";
-var reizenUrl = 'http://192.168.0.42:8080/';
+var reizenUrl = 'http://192.168.0.16:8080/';
 var routes = [];
 
 var nickName = null;
