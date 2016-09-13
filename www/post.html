@@ -1,17 +1,42 @@
 <link rel="stylesheet" href="css/post.css" />
 
-<script type="text/javascript" src="js/post.js"></script>
+<script type="text/javascript" src="js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/post.js"></script> 
 
 <div id="post_title">
-  <div id="post_thumb" style="background-image:url(http://tong.visitkorea.or.kr/cms/resource/74/1583574_image2_1.jpg)"></div>
-  <h2>Soohyun Ko</h2>
-  <h3>나만의 여행</h3>
-  <h4>2016-09-06~2016-09-08</h4>
+  <div id="post_thumb"></div>
+  <h2></h2>
+  <h3></h3>
+  <h4></h4>
 </div>
 
-<ul id="post_content">
-  <li class="post_day">Day 1</li>
+<form id='update-Post'  method="POST" enctype='multipart/form-data'>
+<img id="displayArea" src="" width="100">
+<input id='photoFile' type='file' class='file' name='files' />
+          </form>
+
+<a id="btnTakePhoto">사진촬영하기</a>
+<a id="btnGetPhoto">사진불러오기</a>
+
+<ul id="post_content"></ul>
+
+<script id="postScheduleList" type="text/x-handlebars-template">
+{{#list}}
+  {{#day route.day}}
+    <li class="post_day">Day {{route.day}} <span class="post_date">{{splitTime route.time}}</span></li>
+  {{/day}}
   <li class="post_list">
-    태백산도립공원
+   <span class="post_icon"><i class="fa fa-camera" aria-hidden="true"></i></span>
+   <a class="btn_post_review ui-btn ui-icon-edit ui-btn-icon-notext ui-nodisc-icon">후기작성</a>
+    {{route.location.locateName}}{{stime route.time}}
+    <img class="post_img" src="{{route.location.firstImage}}">
+    <span class="post_tel"><i class="fa fa-phone" aria-hidden="true"></i> {{route.location.tel}}</span>
   </li>
-</ul>
+  <li class="post_review">
+    <div class="post_review_title">후기 작성</div>
+  </li>
+{{/list}}
+</script>

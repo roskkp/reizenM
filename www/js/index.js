@@ -1,6 +1,6 @@
-//var reizenUrl = "http://192.168.0.30:8080/";
+var reizenUrl = "http://192.168.0.30:8080/";
 var pro_sdno;
-var reizenUrl = 'http://192.168.0.42:8080/';
+//var reizenUrl = 'http://192.168.0.42:8080/';
 var routes = [];
 
 var nickName = null;
@@ -12,6 +12,8 @@ var spot_cid;
 $(function(){
 	
 	$('#content').load('post.html');
+	
+	$('.index_menu').listview();
     
     $(document).off('click').on('click', '.btn_index_home', function() {
     	 $(location).attr('href', '/');
