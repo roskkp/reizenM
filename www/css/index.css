@@ -19,3 +19,23 @@ div.mainMenus > div {
 div.loginWrap {
 	margin : 15px;
 }
+
+.index_menu {
+	display: none;
+}
+
+.login {
+	display: block;
+}
+/*============   스케줄 팝업 버튼   ============*/
+.pro_sdno_selector {
+    width: 49%;
+    height: 28px;
+    margin-right: 1%;
+    line-height: 0px;
+}
+
+#routeSelect {
+   width: 250px;
+   padding: 1%;
+}
