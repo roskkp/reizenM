@@ -52,8 +52,9 @@ li.post_day span.post_date {
 
 li.post_list {
   border: 1px solid rgba(255, 255, 255, 0.8);	
-  padding: 5px 5px 5px 50px;
+  padding: 10px 5px 10px 50px;
   position: relative;
+  margin-bottom: 10px;
 }
 
 li.post_list span.post_icon {
@@ -79,18 +80,50 @@ li.post_list img.post_img {
 	display: block;
 }
 
-li.post_list a.btn_post_review {
-	position: absolute;
-	top: 0px;
-	right: 5px;
-	border: none;
-}
-
 li.post_review {
-  margin: 3px 0px 10px 0px;
+  margin: 0px 0px 20px 0px;
   border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  position: relative;
 }
 
 li.post_review div.post_review_title {
 	text-align: center;
+}
+
+a.btn_post_delete {
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	color: #fff;
+	font-size: 2em;
+	cursor: pointer;
+}
+
+a.btn_post_delete:hover {
+	color: #fff;
+}
+
+img.scriptImage {
+	width: 100%;
+	height: auto;
+	border-radius: 5px;
+}
+
+.btn_post, .btn_post_edit {
+	float: right;
+	color: steelblue;
+}
+
+.btn_post_take_photo, .btn_post_get_photo, .btn_post_cancel, .btn_addPost {
+	background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+p.con > h3 {
+	font-size: 1em;
+	margin: 0;
+}
+
+#popupPost, #popupEdit {
+	padding: 10px;
 }

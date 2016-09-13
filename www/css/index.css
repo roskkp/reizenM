@@ -27,6 +27,15 @@ div.loginWrap {
 .login {
 	display: block;
 }
+
+input#email, input#password {
+	width: 80%;
+	margin-bottom: 3%;
+}
+
+.login-label {
+	margin-bottom: 3%;
+}
 /*============   스케줄 팝업 버튼   ============*/
 .pro_sdno_selector {
     width: 49%;
