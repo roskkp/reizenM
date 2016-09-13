@@ -1,7 +1,7 @@
-<link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" href="css/proceeding.css" />
 <script src="js/ajax.googleapis-1.10.3-jquery-ui.min.js"></script>
-  <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/jquery.ui.touch-punch.min.js"></script>
+
   <!-- proceedingMain -->
         <div class="ui-grid-d pro_dayWeather">
           <div class="ui-block-a">
@@ -27,47 +27,30 @@
         </div>
       </div>
       
-      <div class="modal modal-center fade" id="timeModal" tabindex="-1"
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-center pro_modal" role="document">
-      <div class="modal-content adm-content">
-        <div class="modal-header adm-header">
-          <button type="button" class="close" data-dismiss="modal"
-            aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title adm-title" id="addModalLabel">시간을 선택해주세요.</h4>
+      <div data-role="popup" id="timeSelect">
+        <div>
+          <h4>시간을 선택해주세요.</h4>
+          <select id="pro_updateHour" class="form-control adm-form-control"></select>시 : 
+      
+	        <select id="pro_updateMin" class="form-control adm-form-control">
+	          <option value="00" selected>00</option>
+	          <option value="30">30</option>
+	        </select>분<br><br>
+	        <button id="pro_btnCancel" type="button" class="pro_btn_cancel" data-dismiss="modal">취소</button>
+          <button id="pro_btnSubmit" type="button" class="pro_btn_confirm">변경</button><br><br>
         </div>
-        <div class="modal-body">
-          <div class="form-group adm-form-group">
-            <select id="updateHour" class="form-control adm-form-control">
-            </select>
-             : 
-            <select id="updateMin" class="form-control adm-form-control">
-              <option value="00" selected>00</option>
-              <option value="30">30</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer adm-footer">
-          <button id="btnCancel" type="button" class="btn btn-default adm-cancel" data-dismiss="modal">취소</button>
-          <button id="btnTimeSubmit" type="button" class="btn btn-default adm-confirm">추가</button>
-        </div>
+        
       </div>
-    </div>
-  </div>
-
       
 <script id="pro_routeBox" type="text/x-handlebarsx-template">
 {{#each list}}      
-  <li data-routeNo="{{routeNo}}">
+  <li class="pro_route-li" data-routeNo="{{routeNo}}">
     <a>
       <div class="pro_routeBox_top">
         <i class="fa {{icon}} pro_type_icon" aria-hidden="true" data-type="{{location.typeId}}"></i>
         <span class="pro_routeBox_title">{{location.locateName}}</span>
         <i class="fa fa-info-circle pro_info_icon" aria-hidden="true" data-cid="{{location.contentId}}"></i>
         <i class="fa fa-sticky-note pro_memo_icon {{#if flag}}pro_alarm{{/if}}" data-routeNo="{{routeNo}}" data-cid="{{location.contentId}}" aria-hidden="true"></i>  
-        <i class="fa fa-times pro_remove_icon" aria-hidden="true"></i>
       </div>
       <div class="pro_routeBox_bot">
         <span class="pro_route_time">{{time}}</span>
