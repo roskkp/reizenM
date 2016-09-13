@@ -1,13 +1,77 @@
+<link rel="stylesheet" href="css/search.css" />
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=geometry&key=AIzaSyB8Z6lI6WjzkphJ-gFAxYVtokVaNo2I3zw&sensor=false&callback=initialize"></script>
 <script type="text/javascript" src="js/search.js"></script>
 
-<input id="keyword" type="search" name="search" value="" placeholder="검색어를 입력하세요">
 
-<ul id="spot_category" data-role="listview"data-inset="true">
-  <li data-role="list-divider">카테고리 선택</li>
-  <li><a id="spot_nature" href="#">자연</a></li>
-  <li><a href="#">문화</a></li>
-  <li><a href="#">레포츠</a></li>
-  <li><a href="#">쇼핑</a></li>
-  <li><a href="#">음식</a></li>
-  <li><a href="#">숙박</a></li>
-</ul>
+<input id="keyword" type="search" name="search" value="" placeholder="검색어를 입력하세요">
+<!-- grid-a : 2칸 나누기 ... grid-d : 5칸 나누기 / MAX 5칸 -->
+<div class="ui-grid-b">
+	<div class="ui-block-a">
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<div id="btnHotel" class="category" data-cate="B02">
+					<i class="fa fa-bed  icons" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div id="btnEat" class="category" data-cate="A05">
+					<i class="fa fa-cutlery  icons" aria-hidden="true"></i>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<div class="ui-block-b">
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<div id="btnSpot" class="category" data-cate="A01">
+					<i class="fa fa-camera  icons" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div id="btnLeports" class="category" data-cate="A03">
+					<i class="fa fa-bicycle  icons" aria-hidden="true"></i>
+				</div>
+			</div>			
+		</div>		
+	</div>
+	<div class="ui-block-c">
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<div id="btnShop" class="category" data-cate="A04">
+					<i class="fa fa-shopping-bag  icons" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div id="btnFestival" class="category" data-cate="A0207">
+					<i class="fa fa-star  icons" aria-hidden="true"></i>
+				</div>
+			</div>			
+		</div>		
+	</div>
+</div>
+
+<div id="resultList" class="ui-grid-a">
+</div><!-- /grid-a -->
+<div class="radiusWrap">
+ <a id="btnPrev" href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+     총 <span class="resultCount"></span>개 결과
+ <a id="btnNext" href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+</div>
+<script id="searchResult" type="text/x-handlebarsx-template">
+{{#data}}
+{{#if ab}}
+<div class="ui-block-{{ab}} resultCard">
+	<div class="contentWrap" data-contentid={{contentId}} data-typeid={{typeId}}>
+		<div><img class="resultImg" alt="여행지 이미지" src="{{firstImage}}" /></div>
+		<div class="resultText">
+			<h2 class="ellipsis">{{locateName}}</h2>
+			<div class="informaition">
+				<p class="infoText"><i class="fa fa-heart icon" aria-hidden="true"></i>&nbsp;{{recommandCount}}&nbsp;<i class="fa fa-paperclip icon" aria-hidden="true"></i>&nbsp;{{scrapCount}}</p>
+				<p class="distance">>{{distance}}Km</p>
+			</div>
+		</div>
+	</div>
+</div>
+{{/if}}
+{{/data}}
+</script>

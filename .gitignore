@@ -2,3 +2,4 @@ www/node_modules/
 .gradle/
 .project
 platforms/
+plugins/android.json

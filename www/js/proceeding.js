@@ -12,7 +12,6 @@ $(function() {
 	listAjax();
 
 	setInterval(checkAlarm(), 1000*60*3);
-	
 	$('#content').off('click').on('click','.pro_memo_icon',function(){
 		if (!$(this).hasClass('pro_memo_active')){
 			for (var i = 0; i < $('.pro_listview li').length; i++) {
