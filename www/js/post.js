@@ -8,21 +8,7 @@ $(function(){
 		getPhoto();
 	});
 	
-	/*$('#btnGetPhoto').fileupload({
-		autoUpload : false
-	}).on('fileuploadadd', function(e, data) {
-		filesList.pop(); 
-		console.log('여기들어왓나');
-		console.log(data.files[0]);
-		filesList.push(data.files[0]);
-		console.log(filesList);
-		
-	}).on('fileuploaddone', function (e, data) {
-		alert('성공');
-		location.reload();
-	});*/
-	
-	
+	$('#popupPost').popup();
 	
 	$.ajax({
 		url : reizenUrl+'postscript/postscript.do?scheduleNo='+956,
@@ -34,6 +20,9 @@ $(function(){
 				var source = $('#postScheduleList').html();
 				var template = Handlebars.compile(source);
 				$('#post_content').append(template(result));
+				$('.btn_post').on('click', function(){
+					$('#popupPost').popup('open');
+				});
 			}else{
 				swal('error');
 			}
@@ -61,7 +50,7 @@ $(function(){
 			}
 		}
 	});
-
+	
 });
 
 function initPhoneGap(){
@@ -85,11 +74,14 @@ function onPhotoDataSuccess(imageData){
 	options.mimeType = "image/jpeg";
 
 	var params = {};
-	params.value1 = "test";
-	params.value2 = "param";
+	params.fullpath = image;
+	params.name = options.fileName;
+	options.params = params;
 
 	options.params = params;
 
+	alert('보낼꺼야');
+	
 	var ft = new FileTransfer();
 	ft.upload(image, encodeURI('http://192.168.0.30:8080/postscript/addMobile.do'), win, fail, options);
 }
@@ -104,17 +96,27 @@ function getPhoto(){
 function onPhotoURISuccess(imageURI){
 	
 	$('#displayArea').attr('src', imageURI);
-	var image = 'data:image/jpeg;base64,'+imageURI;
+	var image = imageURI;
+	
+	alert(image);
+	
 	var options = new FileUploadOptions();
 	options.fileKey = "file";
-	options.fileName = image.substr(fileURL.lastIndexOf('/') + 1);
+	options.fileName = image.substr(image.lastIndexOf('/') + 1);
 	options.mimeType = "image/jpeg";
-
+    options.chunkedMode = false;
+    options.headers = {
+        Connection: "close"
+    }
+	
 	var params = {};
-	params.value1 = "test";
-	params.value2 = "param";
+	params.key = image.substr(image.lastIndexOf('/') + 1);
+	params.type = "jpeg";
 
 	options.params = params;
+
+	alert('보낼꺼야');
+	
 
 	var ft = new FileTransfer();
 	ft.upload(image, encodeURI('http://192.168.0.30:8080/postscript/addMobile.do'), win, fail, options);

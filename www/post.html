@@ -1,8 +1,5 @@
 <link rel="stylesheet" href="css/post.css" />
 
-<script type="text/javascript" src="js/jquery.ui.widget.js"></script>
-<script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
-<script type="text/javascript" src="js/jquery.fileupload.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/post.js"></script> 
 
@@ -13,15 +10,14 @@
   <h4></h4>
 </div>
 
-<form id='update-Post'  method="POST" enctype='multipart/form-data'>
-<img id="displayArea" src="" width="100">
-<input id='photoFile' type='file' class='file' name='files' />
-          </form>
-
-<a id="btnTakePhoto">사진촬영하기</a>
-<a id="btnGetPhoto">사진불러오기</a>
-
 <ul id="post_content"></ul>
+
+<div data-role="popup" id="popupPost" class="ui-corner-all" data-transition="fade" data-overlay-theme="a">
+  <img id="displayArea" src="" width="100">
+  <a id="btnTakePhoto">사진촬영하기</a>
+  <a id="btnGetPhoto">사진불러오기</a>
+  <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+</div>
 
 <script id="postScheduleList" type="text/x-handlebars-template">
 {{#list}}
@@ -30,10 +26,8 @@
   {{/day}}
   <li class="post_list">
    <span class="post_icon"><i class="fa fa-camera" aria-hidden="true"></i></span>
-   <a class="btn_post_review ui-btn ui-icon-edit ui-btn-icon-notext ui-nodisc-icon">후기작성</a>
+    <a class="btn_post" href="#popupPost" data-rel="popup" data-position-to="window" >후기작성</a>
     {{route.location.locateName}}{{stime route.time}}
-    <img class="post_img" src="{{route.location.firstImage}}">
-    <span class="post_tel"><i class="fa fa-phone" aria-hidden="true"></i> {{route.location.tel}}</span>
   </li>
   <li class="post_review">
     <div class="post_review_title">후기 작성</div>
