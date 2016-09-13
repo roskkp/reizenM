@@ -77,3 +77,27 @@ ul.spot_info > li > h2 {
 ul.spot_memo > li {
 	padding: 15 5px;
 }
+/* layout */
+#icons{
+	text-align: right;
+	font-size: 1.4em;
+}
+#title{
+	margin: 0px;
+}
+.white{
+	color: #fff;
+}
+#overviewBox{
+	text-align: justify;
+}
+.info-name{
+	width: 100px;
+	text-align: center;
+	font-weight: bold;
+}
+.table{
+	padding: 5px;
+	margin-top:20px;
+	border : 1px solid #fff;
+}

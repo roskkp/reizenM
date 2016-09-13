@@ -128,6 +128,7 @@ function aroundSearch(position,typeId,page){
 					$('#resultList').append(resultset);
 					$('#content').off('click').on('click','.contentWrap',function(){
 						spot_cid = $(this).data('contentid');
+						spot_typeId = $(this).data('typeid');
 						$('#content').load('spot.html');
 					})
 					aroundCount(position);

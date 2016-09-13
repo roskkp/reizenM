@@ -8,6 +8,7 @@ var dashNo = null;
 var scheduleNo = null;
 
 var spot_cid;
+var spot_typeId;
 
 $(function(){
 	

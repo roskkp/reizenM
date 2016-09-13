@@ -6,9 +6,7 @@
 
 <div class="swiper-container">
   <div class="swiper-wrapper">
-    <div class="swiper-slide" style="background-image:url('http://lorempixel.com/1000/1000/nightlife/1')">Slide 1</div>
-    <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1000/1000/nightlife/2)">Slide 2</div>
-    <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1000/1000/nightlife/3)">Slide 3</div>
+    
   </div>
   <div class="swiper-pagination"></div>
   <div class="swipe-button-prev"></div>
@@ -21,18 +19,21 @@
 <div class="spot_tab" data-role="tabs">
   <div class="spot_nav" data-role="navbar" data-defaults="true">
     <ul>
-      <li><a href="#info" data-ajax="false" class="ui-btn-active">정보</a></li>
-      <li><a href="#memo" data-ajax="false">메모</a></li>
+      <li><a href="#info" data-ajax="false" class="ui-btn-active">자세히</a></li>
+      <li><a href="#memo" data-ajax="false">리뷰</a></li>
     </ul>
   </div>
   <div id="info" class="spot_tabs">
-    <h1>속초해변</h1>
-    <ul class="spot_listview spot_info">
-      <li>
-        <h2>주소</h2><p>서울시 어쩌구저쩌구 </p>
-        <h2>주소</h2><p>서울시 어쩌구저쩌구 </p>
-      </li>
-    </ul>
+    <h1 id="title" class="white"></h1>
+    <div>
+	 	<div id="icons" class="white">
+			<i id="like" class="fa fa-heart"></i>&nbsp;<span>0</span>&nbsp;
+			<i id="scrap" class="fa fa-paperclip"></i>&nbsp;<span>0</span>
+		</div>
+    </div>
+    <div id="overviewBox" class="white"></div>
+	<table class="table white">
+	</table>
   </div>
   <div id="memo" class="spot_tabs">
     <ul class="spot_listview spot_memo">
@@ -43,3 +44,592 @@
     </ul>
   </div>
 </div>
+
+
+<script id="infoBox" type="text/x-handlebarsx-template">
+{{#each data}}
+<tr>
+  <td class="info-name">{{cate}}</td>
+  <td class="info-detail">{{data}}</td>
+</tr>
+{{/each}}
+</script>
+<script type="text/sparql" id="food">")
+  OPTIONAL{
+    ?resource ktop:additionalFacility ?부대시설.
+  }
+  OPTIONAL{
+    ?resource ktop:address ?주소.
+  }
+  OPTIONAL{
+    ?resource ktop:bestMenu ?대표메뉴.
+  }
+  OPTIONAL{
+    ?resource ktop:closedForTheDay ?쉬는날.
+  }
+  OPTIONAL{
+    ?resource ktop:creditCard ?신용카드.
+  }  
+  OPTIONAL{
+    ?resource ktop:fee ?이용요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:menu ?취급메뉴.
+  }  
+  OPTIONAL{
+    ?resource ktop:openningDate ?개장일.
+  }  
+  OPTIONAL{
+    ?resource ktop:openTime ?영업시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:operationTime ?운영시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:parking ?주차시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:parkingFee ?주차요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:playAreaForChildren ?어린이놀이방.
+  }  
+  OPTIONAL{
+    ?resource ktop:price ?가격정보.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservation ?예약안내.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservationSites ?예약안내홈페이지.
+  }  
+  OPTIONAL{
+    ?resource ktop:restDate ?쉬는날.
+  }  
+  OPTIONAL{
+    ?resource ktop:scale ?규모.
+  }  
+  OPTIONAL{
+    ?resource ktop:seat ?좌석수.
+  }  
+  OPTIONAL{
+    ?resource ktop:smokingSectionAvailable ?흡연.
+  }  
+  OPTIONAL{
+    ?resource ktop:takeOut ?포장가능여부.
+  }  
+  OPTIONAL{
+    ?resource ktop:tel ?전화번호.
+  }  
+  OPTIONAL{
+    ?resource ktop:timeAvailable ?이용시간.
+  }  
+  OPTIONAL{
+    ?resource dc:description ?상세설명.
+  }
+  OPTIONAL{
+    ?resource foaf:depiction ?img.
+  }
+} limit 100
+</script>
+
+	<script type="text/sparql" id="shopping">")
+
+  OPTIONAL{
+    ?resource ktop:additionalFacility ?부대시설.
+  }
+  OPTIONAL{
+    ?resource ktop:address ?주소.
+  }
+  OPTIONAL{
+    ?resource ktop:babyEquipmentRental ?유모차대여.
+  }
+  OPTIONAL{
+    ?resource ktop:closedForTheDay ?쉬는날.
+  }
+  OPTIONAL{
+    ?resource ktop:creditCard ?신용카드.
+  }
+  OPTIONAL{
+    ?resource ktop:discount ?할인정보.
+  }
+  OPTIONAL{
+    ?resource ktop:facilities ?편의시설.
+  }
+  OPTIONAL{
+    ?resource ktop:fairDay ?장서는날.
+  }  
+  OPTIONAL{
+    ?resource ktop:menu ?취급메뉴.
+  }  
+  OPTIONAL{
+    ?resource ktop:openTime ?영업시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:operationTime ?운영시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:parking ?주차시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:parkingFee ?주차요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:petsAvailable ?애완동물동반.
+  }  
+  OPTIONAL{
+    ?resource ktop:price ?가격정보.
+  }  
+  OPTIONAL{
+    ?resource ktop:scale ?규모.
+  }  
+  OPTIONAL{
+    ?resource ktop:tel ?전화번호.
+  }  
+  OPTIONAL{
+    ?resource dc:description ?상세설명.
+  }
+  OPTIONAL{
+    ?resource foaf:depiction ?img.
+  }
+} limit 100
+</script>
+
+	<script type="text/sparql" id="tourist">")
+  
+  OPTIONAL{
+    ?resource ktop:additionalFacility ?부대시설.
+  }
+  OPTIONAL{
+    ?resource ktop:address ?주소.
+  }
+  OPTIONAL{
+    ?resource ktop:ageLimit ?체험가능연령.
+  }
+  OPTIONAL{
+    ?resource ktop:babyEquipmentRental ?유모차대여.
+  }
+  OPTIONAL{
+    ?resource ktop:creditCard ?신용카드.
+  }  
+  OPTIONAL{
+    ?resource ktop:facilities ?편의시설.
+  }
+  OPTIONAL{
+    ?resource ktop:occupancy ?수용가능인원.
+  }  
+  OPTIONAL{
+    ?resource ktop:openningDate ?개장일.
+  }  
+  OPTIONAL{
+    ?resource ktop:openTime ?영업시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:operationTime ?운영시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:parking ?주차시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:parkingFee ?주차요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:petsAvailable ?애완동물동반.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservation ?예약안내.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservationSites ?예약안내홈페이지.
+  }  
+  OPTIONAL{
+    ?resource ktop:restDate ?쉬는날.
+  }  
+  OPTIONAL{
+    ?resource ktop:restroom ?화장실.
+  }  
+  OPTIONAL{
+    ?resource ktop:seasons ?이용시기.
+  }  
+  OPTIONAL{
+    ?resource ktop:tel ?전화번호.
+  }  
+  OPTIONAL{
+    ?resource ktop:timeAvailable ?이용시간.
+  }  
+  OPTIONAL{
+    ?resource dc:description ?상세설명.
+  }
+  OPTIONAL{
+    ?resource foaf:depiction ?img.
+  }
+} limit 100
+</script>
+
+	<script type="text/sparql" id="leports">")
+
+  OPTIONAL{
+    ?resource ktop:additionalFacility ?부대시설.
+  }
+  OPTIONAL{
+    ?resource ktop:address ?주소.
+  }
+  OPTIONAL{
+    ?resource ktop:ageLimit ?체험가능연령.
+  }
+  OPTIONAL{
+    ?resource ktop:babyEquipmentRental ?유모차대여.
+  }
+  OPTIONAL{
+    ?resource ktop:closedForTheDay ?쉬는날.
+  }
+  OPTIONAL{
+    ?resource ktop:creditCard ?신용카드.
+  }
+  OPTIONAL{
+    ?resource ktop:facilities ?편의시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:fee ?이용요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:occupancy ?수용가능인원.
+  }  
+  OPTIONAL{
+    ?resource ktop:openningDate ?개장일.
+  }  
+  OPTIONAL{
+    ?resource ktop:openTime ?영업시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:operationTime ?운영시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:parking ?주차시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:parkingFee ?주차요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:petsAvailable ?애완동물동반.
+  }  
+  OPTIONAL{
+    ?resource ktop:price ?가격정보.
+  }  
+  OPTIONAL{
+    ?resource ktop:restDate ?쉬는날.
+  }  
+  OPTIONAL{
+    ?resource ktop:restroom ?화장실.
+  }  
+  OPTIONAL{
+    ?resource ktop:scale ?규모.
+  }  
+  OPTIONAL{
+    ?resource ktop:seasons ?이용시기.
+  }  
+  OPTIONAL{
+    ?resource ktop:tel ?전화번호.
+  }  
+  OPTIONAL{
+    ?resource ktop:timeAvailable ?이용시간.
+  }  
+  OPTIONAL{
+    ?resource dc:description ?상세설명.
+  }
+  OPTIONAL{
+    ?resource foaf:depiction ?img.
+  }
+} limit 100
+</script>
+
+	<script type="text/sparql" id="culture">")
+
+  OPTIONAL{
+    ?resource ktop:additionalFacility ?부대시설.
+  }
+  OPTIONAL{
+    ?resource ktop:address ?주소.
+  }
+  OPTIONAL{
+    ?resource ktop:babyEquipmentRental ?유모차대여.
+  }
+  OPTIONAL{
+    ?resource ktop:closedForTheDay ?쉬는날.
+  }
+  OPTIONAL{
+    ?resource ktop:creditCard ?신용카드.
+  }  
+  OPTIONAL{
+    ?resource ktop:discount ?할인정보.
+  }
+  OPTIONAL{
+    ?resource ktop:facilities ?편의시설.
+  }
+  OPTIONAL{
+    ?resource ktop:fee ?이용요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:occupancy ?수용가능인원.
+  }  
+  OPTIONAL{
+    ?resource ktop:openTime ?영업시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:operationTime ?운영시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:parking ?주차시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:parkingFee ?주차요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:petsAvailable ?애완동물동반.
+  }  
+  OPTIONAL{
+    ?resource ktop:price ?가격정보.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservation ?예약안내.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservationSites ?예약안내홈페이지.
+  }  
+  OPTIONAL{
+    ?resource ktop:restDate ?쉬는날.
+  }  
+  OPTIONAL{
+    ?resource ktop:restroom ?화장실.
+  }  
+  OPTIONAL{
+    ?resource ktop:scale ?규모.
+  }  
+  OPTIONAL{
+    ?resource ktop:tel ?전화번호.
+  }  
+  OPTIONAL{
+    ?resource ktop:timeAvailable ?이용시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:timeRequired ?관람소요시간.
+  }  
+  OPTIONAL{
+    ?resource dc:description ?상세설명.
+  }
+  OPTIONAL{
+    ?resource foaf:depiction ?img.
+  }
+} limit 100
+</script>
+
+	<script type="text/sparql" id="lodge">")
+
+  OPTIONAL{
+    ?resource ktop:additionalFacility ?부대시설.
+  }
+  OPTIONAL{
+    ?resource ktop:address ?주소.
+  }
+  OPTIONAL{
+    ?resource ktop:barbecue ?바비큐.
+  }
+  OPTIONAL{
+    ?resource ktop:beauty ?뷰티시설.
+  }
+  OPTIONAL{
+    ?resource ktop:bicycleRental ?자전거대여.
+  }
+  OPTIONAL{
+    ?resource ktop:campfire ?캠프화이어.
+  }
+  OPTIONAL{
+    ?resource ktop:checkIn ?입실시간.
+  }
+  OPTIONAL{
+    ?resource ktop:checkOut ?퇴실기간.
+  }
+  OPTIONAL{
+    ?resource ktop:closedForTheDay ?쉬는날.
+  }
+  OPTIONAL{
+    ?resource ktop:cooking ?객실내취사.
+  }
+  OPTIONAL{
+    ?resource ktop:creditCard ?신용카드.
+  }
+  OPTIONAL{
+    ?resource ktop:facilities ?편의시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:fee ?이용요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:fitnessCenter ?휘트니스센터.
+  }  
+  OPTIONAL{
+    ?resource ktop:foodAndBeverage ?식음료장.
+  }  
+  OPTIONAL{
+    ?resource ktop:occupancy ?수용가능인원.
+  }  
+  OPTIONAL{
+    ?resource ktop:openTime ?영업시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:operationTime ?운영시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:parking ?주차시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:parkingFee ?주차요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:pickup ?픽업서비스.
+  }  
+  OPTIONAL{
+    ?resource ktop:price ?가격정보.
+  }  
+  OPTIONAL{
+    ?resource ktop:publicBath ?공용샤워실.
+  }  
+  OPTIONAL{
+    ?resource ktop:publicPC ?공용PC실.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservation ?예약안내.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservationSites ?예약안내홈페이지.
+  }  
+  OPTIONAL{
+    ?resource ktop:restDate ?쉬는날.
+  }  
+  OPTIONAL{
+    ?resource ktop:roomCount ?객실수.
+  }  
+  OPTIONAL{
+    ?resource ktop:roomRates ?객실요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:roomType ?객실유형.
+  }  
+  OPTIONAL{
+    ?resource ktop:sauna ?사우나실.
+  }  
+  OPTIONAL{
+    ?resource ktop:scale ?규모.
+  } 
+  OPTIONAL{
+    ?resource ktop:seminar ?세미나실.
+  }  
+  OPTIONAL{
+    ?resource ktop:singingRoom ?노래방.
+  } 
+  OPTIONAL{
+    ?resource ktop:sportsFicility ?스포츠시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:tel ?전화번호.
+  }  
+  OPTIONAL{
+    ?resource ktop:timeAvailable ?이용시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:whirlpoolBaths ?월풀욕조.
+  }  
+  OPTIONAL{
+    ?resource dc:description ?상세설명.
+  }
+  OPTIONAL{
+    ?resource foaf:depiction ?img.
+  }
+} limit 100
+</script>
+
+	<script type="text/sparql" id="festival">")
+  
+  OPTIONAL{
+    ?resource ktop:additionalFacility ?부대시설.
+  }
+  OPTIONAL{
+    ?resource ktop:address ?주소.
+  }
+  OPTIONAL{
+    ?resource ktop:ageAvailable ?관람가능연령.
+  }
+  OPTIONAL{
+    ?resource ktop:closedForTheDay ?쉬는날.
+  }
+  OPTIONAL{
+    ?resource ktop:creditCard ?신용카드.
+  }  
+  OPTIONAL{
+    ?resource ktop:discount ?할인정보.
+  }
+  OPTIONAL{
+    ?resource ktop:dueDate ?이벤트시작예정일.
+  }
+  OPTIONAL{
+    ?resource ktop:endDate ?이벤트종료예정일.
+  }
+  OPTIONAL{
+    ?resource ktop:facilities ?편의시설.
+  }
+  OPTIONAL{
+    ?resource ktop:fee ?이용요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:openTime ?영업시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:operationTime ?운영시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:parking ?주차시설.
+  }  
+  OPTIONAL{
+    ?resource ktop:parkingFee ?주차요금.
+  }  
+  OPTIONAL{
+    ?resource ktop:petsAvailable ?애완동물동반가능여부.
+  }  
+  OPTIONAL{
+    ?resource ktop:price ?가격정보.
+  }  
+  OPTIONAL{
+    ?resource ktop:profile ?프로필.
+  }  
+  OPTIONAL{
+    ?resource ktop:program ?행사프로그램.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservation ?예약안내.
+  }  
+  OPTIONAL{
+    ?resource ktop:reservationSites ?예약안내홈페이지.
+  }  
+  OPTIONAL{
+    ?resource ktop:restDate ?쉬는날.
+  }  
+  OPTIONAL{
+    ?resource ktop:restroom ?화장실.
+  }  
+  OPTIONAL{
+    ?resource ktop:showTime ?공연시간.
+  }  
+  OPTIONAL{
+    ?resource ktop:startDate ?이벤트시작일.
+  }  
+  OPTIONAL{
+    ?resource ktop:tel ?전화번호.
+  }  
+  OPTIONAL{
+    ?resource dc:description ?상세설명.
+  }
+  OPTIONAL{
+    ?resource foaf:depiction ?img.
+  }
+} limit 100
+</script>

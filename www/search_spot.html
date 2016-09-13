@@ -5,48 +5,50 @@
 
 <input id="keyword" type="search" name="search" value="" placeholder="검색어를 입력하세요">
 <!-- grid-a : 2칸 나누기 ... grid-d : 5칸 나누기 / MAX 5칸 -->
-<div class="ui-grid-d">
+<div class="ui-grid-b">
 	<div class="ui-block-a">
-		<div id="btnHotel" class="category" data-cate="B02">
-			<i class="fa fa-bed fa-2x icons" aria-hidden="true"></i>
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<div id="btnHotel" class="category" data-cate="B02">
+					<i class="fa fa-bed  icons" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div id="btnEat" class="category" data-cate="A05">
+					<i class="fa fa-cutlery  icons" aria-hidden="true"></i>
+				</div>
+			</div>			
 		</div>
 	</div>
 	<div class="ui-block-b">
-		<div id="btnEat" class="category" data-cate="A05">
-			<i class="fa fa-cutlery fa-2x icons" aria-hidden="true"></i>
-		</div>
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<div id="btnSpot" class="category" data-cate="A01">
+					<i class="fa fa-camera  icons" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div id="btnLeports" class="category" data-cate="A03">
+					<i class="fa fa-bicycle  icons" aria-hidden="true"></i>
+				</div>
+			</div>			
+		</div>		
 	</div>
 	<div class="ui-block-c">
-		<div id="btnSpot" class="category" data-cate="A01">
-		<i class="fa fa-camera fa-2x icons" aria-hidden="true"></i>
-		</div>
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<div id="btnShop" class="category" data-cate="A04">
+					<i class="fa fa-shopping-bag  icons" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div id="btnFestival" class="category" data-cate="A0207">
+					<i class="fa fa-star  icons" aria-hidden="true"></i>
+				</div>
+			</div>			
+		</div>		
 	</div>
-	<div class="ui-block-d">
-		<div id="btnLeports" class="category" data-cate="A03">
-			<i class="fa fa-bicycle fa-2x icons" aria-hidden="true"></i>
-		</div>
-	</div>
-	<div class="ui-block-e">
-		<div id="btnShop" class="category" data-cate="A04">
-			<i class="fa fa-shopping-bag fa-2x icons" aria-hidden="true"></i>
-		</div>
-	</div>
-	
-</div><!-- /grid-d -->
-<div class="ui-grid-a">
-	<div class="ui-block-a">
-		<div id="btnFestival" class="category" data-cate="A0207">
-			<i class="fa fa-star fa-2x icons" aria-hidden="true"></i>
-		</div>
-	</div>
-	<div class="ui-block-b">
-		<div id="btnScrap" class="category">
-			<i class="fa fa-paperclip fa-2x icons" aria-hidden="true"></i>
-		</div>
-	</div>
-	<span id=lat></span> 
-	<span id=lng></span>
-</div><!-- /grid-a -->
+</div>
 
 <div id="resultList" class="ui-grid-a">
 </div><!-- /grid-a -->
@@ -59,7 +61,7 @@
 {{#data}}
 {{#if ab}}
 <div class="ui-block-{{ab}} resultCard">
-	<div class="contentWrap" data-contentid={{contentId}}>
+	<div class="contentWrap" data-contentid={{contentId}} data-typeid={{typeId}}>
 		<div><img class="resultImg" alt="여행지 이미지" src="{{firstImage}}" /></div>
 		<div class="resultText">
 			<h2 class="ellipsis">{{locateName}}</h2>
