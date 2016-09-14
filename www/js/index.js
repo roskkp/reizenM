@@ -1,8 +1,8 @@
-//var reizenUrl = "http://192.168.0.30:8080/";
+var reizenUrl = "http://192.168.0.30:8080/";
 var pro_sdno = "";
 var pro_sdnos = "";
 var pro_sdnot = "";
-var reizenUrl = 'http://192.168.0.42:8080/';
+//var reizenUrl = 'http://192.168.0.42:8080/';
 var routes = [];
 
 var nickName = null;
@@ -14,12 +14,17 @@ var spot_typeId;
 
 $(function(){
 	
+//	$('#content').load('post.html');
+	
+	$('.index_menu').listview();
+    
 	loginCheck();
 	
     $("body>[data-role='panel']").panel();
 	
 	$('#content').load('main.html');
-    $(document).off('click').on('click', '.btn_index_home', function() {
+
+	$(document).off('click').on('click', '.btn_index_home', function() {
     	 $(location).attr('href', '');
     });
     
@@ -80,7 +85,7 @@ $(function(){
 	
     $(document).on('click', '.btn_index_dash', function() {
     	if(dashNo!=null){
-    		swal('dash click')
+    		swal('dash click');
     	    $('.index_content').load('dashboard.html');
     	}else{
     		swal("로그인 필요", "로그인 해주세요.", "warning"); 
@@ -124,6 +129,7 @@ function login(){
 				localStorage.setItem("dashNo", dashNo);
 				localStorage.setItem("pro_sdnos", pro_sdnos);
 				localStorage.setItem("pro_sdnot", pro_sdnot);
+				localStorage.setItem("userNo", userNo);
 				$('.index_menu').addClass('login');
 				$('.index_profile h3').text(nickName);
 				$('.index_login').css('display','none');
