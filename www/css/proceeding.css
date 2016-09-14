@@ -21,6 +21,10 @@
 .pro_listview{
   padding-top: 20px;
 }
+ul.pro_listview > li.pro_route-li{
+  background-color: transparent !important;
+  color: white !important;	
+}
 .pro_routeBox_top{
   padding-top: 15px;
   position: relative;
@@ -28,6 +32,7 @@
 .pro_routeBox_bot{
   font-size: 14px;
   position: relative;
+  margin-bottom: 3px;
 }
 .pro_routeBox_top > .pro_type_icon{
   font-size: 30px;
@@ -49,20 +54,9 @@
 .pro_memo_icon{
   position: absolute;
   float: right;
-  right: 40px;
-  top: 0;
-}
-.pro_remove_icon{
-  position: absolute;
-  float: right;
-  right: 0px;
-  top: 0;
-}
-.pro_info_icon{
-  position: absolute;
-  float: right;
-  right: 19px;
-  top: 0;
+  right: 20px;
+  font-size: 45px;
+  top: 0px;
 }
 .pro_alarmOn {
   color: red;
@@ -78,3 +72,15 @@
 	height: 150%;
 	left: -25%;
 }
+.pro_memos {
+	border-top: 1px solid;
+}
+.pro_memos > .pro_memo_nick {
+	font-weight: 900;
+  font-size: 15px;
+}
+.pro_memos > .pro_memo_time {
+	float: right;
+	padding-right: 15px;
+}
+    

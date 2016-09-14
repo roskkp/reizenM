@@ -16,6 +16,8 @@ $(function(){
 	
 	loginCheck();
 	
+    $("body>[data-role='panel']").panel();
+	
 	$('#content').load('main.html');
     $(document).off('click').on('click', '.btn_index_home', function() {
     	 $(location).attr('href', '');
@@ -48,10 +50,12 @@ $(function(){
 	$('#routeSelect').popup();
 	
     $(document).on('click', '.btn_index_proceeding', function(){
+    	loginCheck();
     	if( pro_sdnos != "" ){
     		var btn = "";
     		$('#routeSelect').empty();
-    		if (pro_sdnos.split(",").length > 1) {
+    		console.log('pro_sdnos.includes(",") : '+pro_sdnos.includes(","))
+    		if (pro_sdnos.includes(",")) {
     			for (var i = 0; i < pro_sdnos.split(",").length; i++) {
     				$('#routeSelect').append('<button class="btn btn-info pro_sdno_selector" data-sdno="'+pro_sdnos.split(",")[i]+'">'+pro_sdnot.split(",")[i]+'</button>');	
 				}
@@ -92,18 +96,8 @@ function loginCheck(){
 		$('.index_login').css('display','none');
 	}
 	if (localStorage.getItem("pro_sdnos") != null) {
-		if (localStorage.getItem("pro_sdnos").split(",").length > 1) {
-			pro_sdnos = localStorage.getItem("pro_sdnos").split(",")[0];
-			pro_sdnot = localStorage.getItem("pro_sdnot").split(",")[0];
-			for (var i = 1; i < localStorage.getItem("pro_sdnos").split(",").length; i++) {
-				pro_sdnos += ","+localStorage.getItem("pro_sdnos").split(",")[i];
-				pro_sdnot += ","+localStorage.getItem("pro_sdnot").split(",")[i];
-			}
-		} else {
-			pro_sdnos = localStorage.getItem("pro_sdnos");
-			pro_sdnot = localStorage.getItem("pro_sdnot");
-		}
-		
+		pro_sdnos = localStorage.getItem("pro_sdnos");
+		pro_sdnot = localStorage.getItem("pro_sdnot");
 	}
 }
 
@@ -116,7 +110,6 @@ function login(){
 		success : function(result){
 			if(result.status=='success'){
 				nickName = result.user.nickName;
-				console.log(result);
 				if (result.activeScheduleNo[0] != null) {
 					pro_sdnos = result.activeScheduleNo[0].scheduleNo;
 					pro_sdnot = result.activeScheduleNo[0].title;
@@ -127,7 +120,7 @@ function login(){
 				}
 				dashNo = result.user.dashNo;
 				localStorage.setItem("nickName", nickName);
-				localStorage.setItem("email", email);
+				localStorage.setItem("email", $('#email').val());
 				localStorage.setItem("dashNo", dashNo);
 				localStorage.setItem("pro_sdnos", pro_sdnos);
 				localStorage.setItem("pro_sdnot", pro_sdnot);
