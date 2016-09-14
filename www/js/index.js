@@ -22,7 +22,10 @@ $(function(){
     });
     
     $(document).on('click', '#btn_index_login',function(){
-    	$('#content').load('login.html');
+    	$('#content').load('login.html',function(){
+    		$('#email').focus();	
+    	});
+    	$('#menu').panel('close');
 	});
     
     $(document).on('click', '#btn_index_submit',function(e){
@@ -143,6 +146,8 @@ function logout(){
 	localStorage.clear();
 	$('.index_menu').removeClass('login');
 	$('.index_login').css('display','block');
+	$('.index_profile h3').text('');
+	$('#menu').panel('close');
 }
 
 function is_integer(x)

@@ -28,11 +28,22 @@ $(function(){
 			$this.css("color","#ffffff").removeAttr('data-active');
 		}
 	});//scrap and like click event listener
-	
+	$('#memoTab').on('click',function(){ 
+		memoCheck();
+	})
+	$('#infoTab').on('click',function(){
+		$('.spot_tab').css('margin-bottom','0px');
+		$('#footer').hide();
+	})
+
+	$('#removeMemo').on('click',function(){
+		deleteMemo();
+	})
 });
 
 function init(){
 	var path = $('#baseSparql').text() + spot_cid;
+	var currentMno;
 	switch (spot_typeId) {
 	case 12:
 		path += $('#tourist').text();
@@ -59,6 +70,23 @@ function init(){
 	}
 	searchInfo(path, spot_cid);
 	checkStatus();
+	memoCheck()
+	$('#page').append('<div id="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">'+
+			  '<input type="text" id="reviewInput" placeholder="리뷰를 남겨 보세요.">'+
+			  '<button id="reviewSubmit">등록</button>'+
+	'</div>');
+	$('#reviewInput').focus();
+	$('#reviewInput').off().on('keyup',function(event){
+		console.log($('#reviewInput').val().length)
+		if($('#reviewInput').val().length==0){
+			$('#reviewSubmit').removeClass('submit-active');
+			return;
+		}
+		$('#reviewSubmit').addClass('submit-active');
+	})
+	$('#reviewSubmit').off().on('click',function(){
+		memoSubmit();
+	})
 }
 
 function searchInfo(path, cid) {
@@ -223,4 +251,109 @@ function changeStatus(command){
           console.log('success');
         }
     })// ajax
+}
+function memoCheck(){
+	$('.spot_memo').empty();
+	$.ajax({
+		url : reizenUrl + 'location/getMemo.do?cid='+spot_cid,
+		method : 'get',
+		dataType : 'json',
+		success : function(result) {
+			if (result.status != 'success') {
+				console.log('error');
+				return;
+			}
+			if (result.data.length == 0) { // 탭바 갯수 표시
+				$("#reviewCount").text("0");
+				$('.spot_memo').append('<span id="emptyMemo" class="white"> 아직 작성된 리뷰가 없네요 ! </span>');
+			} else {
+				result.data.forEach(function(value){
+					value.user.thumbNail=reizenUrl+'resources/images/thumbnail/'+value.user.thumbNail;
+				})
+				$("#reviewCount").text(result.data.length);
+				var source = $('#memoTemplate').text();
+				var template = Handlebars.compile(source);
+				$('.spot_memo').append(template(result));
+				var $target = $('.nickName:contains('+localStorage.getItem("nickName")+')').parents('li'); // 삭제 권한
+				$target.on('taphold',function(event){
+					$("#memo-popup").popup();
+					$("#memo-popup").popup("open");
+					currentMno = $(this).data('no');
+					event.preventDefault();
+				})
+			}
+			if($('#memoTab a').hasClass('ui-btn-active')){
+				if(localStorage.getItem('nickName')!=null && localStorage.getItem('nickName')!='' ){ // 로그인 되어있다면 입력가능 
+					$('.spot_tab').css('margin-bottom','42px');
+					$('#footer').css('display','flex');
+				}else{
+					$('.spot_tab').css('margin-bottom','0px');
+					$('#footer').hide();
+					$('.spot_memo').append('<span id="emptyMemo" class="white"> 아직 작성된 리뷰가 없네요 ! </span>')
+				}
+			}
+		}
+	})
+}
+function memoSubmit(){
+	$.ajax({
+		url : reizenUrl + 'location/writeMemo.do',
+		method : 'post',
+		dataType : 'json',
+		data : {
+			'content' : $('#reviewInput').val(),
+			'cid' : spot_cid,
+			'dsno' : localStorage.getItem('dashNo')
+		},
+		success : function(result) {
+			if (result.status != 'success') {
+				console.log('error');
+				return;
+			}
+			$('#reviewInput').val('');
+			$('#reviewSubmit').removeClass('submit-active');
+			memoCheck();
+			updateMemoAlarm();
+		}
+	})
+}
+function updateMemoAlarm(){
+	$.ajax({
+		url : reizenUrl + 'location/updateMemoAlarm.do?cid='+spot_cid,
+		method : 'get',
+		dataType : 'json',
+		success : function(result) {
+			if (result.status != 'success') {
+				console.log('error');
+				return;
+			}
+			console.log(result);
+		}
+	})
+}
+function deleteMemo(){
+	swal({   
+		title: "Are you sure?",   
+		text: "You will not be able to recover this imaginary file!",   
+		type: "warning",   
+		showCancelButton: true,   
+		confirmButtonColor: "#DD6B55",   
+		confirmButtonText: "Yes, delete it!",   
+		closeOnConfirm: false }, 
+		function(){
+			$.ajax({
+				url : reizenUrl + 'location/removeMemo.do?mno='+currentMno,
+				method : 'get',
+				dataType : 'json',
+				success : function(result) {
+					if (result.status != 'success') {
+						swal("Failed!", "Failed to delete. Please contact your administrator", "error"); 
+						console.log('error');
+						return;
+					}
+					swal("Deleted!", "Your imaginary file has been deleted.", "success"); 
+					memoCheck();
+				}
+			})
+		});
 }

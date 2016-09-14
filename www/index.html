@@ -43,7 +43,8 @@
 		<!-- /header -->
 
 		<div id="content" data-role="content" class="index_content">
-      
+      <!-- <div data-role="popup" id="popup" data-overlay-theme="b" data-theme="b" data-corners="false"> -->
+
     </div>
     <!-- /content -->
   </div>
@@ -75,7 +76,10 @@
   <div data-role="popup" id="routeSelect">
     <p>This is a completely basic popup, no options set.</p>
   </div>
-
+  <div data-role="popup" id="memo-popup" data-overlay-theme="b" data-theme="b" data-corners="false">
+	<p>작업선택</p>
+	<span id="removeMemo">삭제</span>
+  </div>
   <!-- sparql -->
 	<script type="text/sparql" id="baseSparql">
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

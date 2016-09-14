@@ -19,8 +19,8 @@
 <div class="spot_tab" data-role="tabs">
   <div class="spot_nav" data-role="navbar" data-defaults="true">
     <ul>
-      <li><a href="#info" data-ajax="false" class="ui-btn-active">자세히</a></li>
-      <li><a href="#memo" data-ajax="false">리뷰</a></li>
+      <li id="infoTab"><a href="#info" data-ajax="false" class="ui-btn-active">자세히</a></li>
+      <li id="memoTab"><a href="#memo" data-ajax="false">리뷰 (<span id="reviewCount"></span>)</a></li>
     </ul>
   </div>
   <div id="info" class="spot_tabs">
@@ -36,16 +36,31 @@
 	</table>
   </div>
   <div id="memo" class="spot_tabs">
-    <ul class="spot_listview spot_memo">
-      <li>안녕?</li>
-      <li>안녕?</li>
-      <li>안녕?</li>
-      <li>안녕?</li>
+    <ul data-role="listview" class="spot_listview spot_memo">
     </ul>
   </div>
 </div>
 
 
+<script id="memoTemplate" type="text/x-handlebarsx-template">
+{{#each data}}
+      <li data-no={{memoNo}}> <!-- 전체 -->
+      	<div class="profile"> <!-- 프로필 -->
+      		<div class="thumbNail" style="background-image: url('{{user.thumbNail}}')"> <!-- 사진 -->
+      		</div>
+      		<div class="nickName"> <!-- nick -->
+				{{user.nickName}}
+      		</div>
+      		<div class="time"> <!-- time --> 
+				{{dateAgo}}
+      		</div>
+      	</div>
+      	<div class="memoContent"> <!-- content -->
+			{{content}}
+      	</div>
+	 </li>
+{{/each}}
+</script>
 <script id="infoBox" type="text/x-handlebarsx-template">
 {{#each data}}
 <tr>
