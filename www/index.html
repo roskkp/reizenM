@@ -16,22 +16,6 @@
 <script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="node_modules/moment/min/moment.min.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-<script> 
-  $(function() {
-	 /*  $.mobile.ignoreContentEnabled = true; */
-	 
-    $("body>[data-role='panel']").panel();
-    
-    $('#btn_index_search_spot').on('click', function() {
-    	spot_cid = $(this).attr('data-cid');
-       $('#content').load('search_spot.html');
-    });
-    
-    $('.btn_index_search_sc').on('click', function() {
-       $('#content').load('search_sc.html');
-    });
-  });
-</script>
 </head>
 <body>
 	<div id="page" data-role="page" data-quicklinks="true" data-fullscreen="false">
@@ -54,10 +38,12 @@
   <div data-role="panel" id="menu" data-position="left"
     data-display="push" data-theme="b">
     <div class="index_login">
-      <a id="btn_index_login" href="#">로그인</a>
+      <a id="btn_index_login" href="#"><i class="fa fa-power-off" aria-hidden="true"></i></a>
     </div>
     <div class="index_profile">
-      <h3></h3>
+      <img class="profile_img" src="">
+      <span class='profile_nickName'></span>
+      <i class="fa fa-gear login_edit"></i>
     </div>
     <ul class="index_menu" data-role="listview">
       <li><a class="btn_index_proceeding" href="#">진행중인 일정</a></li>
@@ -74,7 +60,6 @@
   
   <!--  popup  -->
   <div data-role="popup" id="routeSelect">
-    <p>This is a completely basic popup, no options set.</p>
   </div>
   <div data-role="popup" id="memo-popup" data-overlay-theme="b" data-theme="b" data-corners="false">
 	<p>작업선택</p>

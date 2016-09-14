@@ -3,6 +3,7 @@ var pro_totalPage;
 var	pro_currentDate;
 var pro_alarm = true;
 var pro_routes = [];
+var pro_updateTarget;
 
 $(function() {
 	swal('proceeding entry');
@@ -10,19 +11,34 @@ $(function() {
 
 	$('.pro_weather').load("weather.html");
 	listAjax();
+	
+	$('#timeSelect').popup();
+	
+	// 메모 알람!
+	$('#content').off('click').on('click','.pro_alarm',function(){
+		$(this).removeClass('pro_alarm').removeClass('pro_alarmOn').removeClass('pro_memo_active');
+		viewAlarm($(this).attr('data-routeno'));
+	})
 
-	setInterval(checkAlarm(), 1000*60*3);
-	$('#content').off('click').on('click','.pro_memo_icon',function(){
+	$('#content').on('click','.pro_memo_icon',function(e){
+		e.preventDefault();
+		e.stopPropagation()
 		if (!$(this).hasClass('pro_memo_active')){
 			for (var i = 0; i < $('.pro_listview li').length; i++) {
+				$($('.pro_listview li')[i]).children('.pro_memos').remove();
+				$($('.pro_listview li')[i]).removeClass('pro_memo_active');
 			}
 			$(this).addClass('pro_memo_active');
 			memoAjax($(this));
 		} else {
-			$(this).parents('a').children('.pro_memos').remove();
+			$(this).parents('li').children('.pro_memos').remove();
 			$(this).removeClass('pro_memo_active');
 		}
 	})
+	
+	setInterval(() => {
+		checkAlarm();
+	}, 1000*60);
 	
 	$('#content').on('click','.pro_move_dayR',function(){
 		if (pro_day != pro_totalPage) {
@@ -41,11 +57,39 @@ $(function() {
 		}
 	})
 	
-	$('#content').on('click','.pro_info_icon',function(){
-		$('#content').load('spot.html');
+	$('#content').on('click','.pro_route-li',function(e){
+		if (e.target != $('.pro_memos')) {
+			spot_cid = $(this).data('cid');
+			spot_typeId = $(this).data('tid');
+			console.log('cid : '+spot_cid+' / tid :'+spot_typeId);
+			$('#content').load('spot.html');
+		}
 	})
 	
-	$('#content').on('click','.pro_remove_icon',function(){
+	$('#content').on('click','.pro_map_icon',function(){
+		$('#content').load('proceeding_map.html');
+	})
+	
+	$('#pro_btnSubmit').on('click',function(){
+		var time = $('#pro_updateHour').val() +":"+$('#pro_updateMin').val()
+		$.getJSON('http://192.168.0.42:8890/scheduler/checkTime.do?scheduleNo='+pro_sdno+'&day='+pro_day+'&time='+time, function(result){
+			if(result.status=='exist'){ // 기 존재하는 시간이라면
+				swal("Failed!", "해당 시간에는 다른 일정이 있네요!", "error"); 
+			} else {
+				pro_updateTarget.text(time);
+				$('#timeSelect').popup('close');
+				updateTime();
+			}
+
+		});
+	})
+	
+	$('#pro_btnCancel').on('click',function(){
+		listAjax();
+		$('#timeSelect').popup('close');
+	})
+	
+	$('#content').on('swipeleft','.pro_route-li',function(){
 		$this = $(this);
 		if($('.pro_listview li').length==1){
 			swal("", "더 이상 삭제할 수 없습니다.", "warning");
@@ -61,19 +105,8 @@ $(function() {
 			cancelButtonText: "취소",
 			closeOnConfirm: false }, 
 			function(){
-				removeAjax($this.parents('li'));
+				removeAjax($this);
 		});
-		e.preventDefault();
-	})
-	
-	// 메모 알람!
-	$('#content').on('click','.pro_alarm',function(){
-		$(this).removeClass('pro_alarm').removeClass('alarmOn');
-		viewAlarm($(this).attr('data-routeNo'));
-	})
-	
-	$('#content').on('click','.pro_map_icon',function(){
-		$('#content').load('proceeding_map.html');
 	})
 	
 	setInterval(() => {
@@ -94,7 +127,7 @@ $(function() {
 function listAjax(){
 	var dayInfo = '';
 	if (pro_day != 0) {
-		dayInfo = '&day='+day;
+		dayInfo = '&day='+pro_day;
 	};
 	$.ajax({
 		url: reizenUrl+'scheduler/proceeding.do?scheduleNo='+pro_sdno+dayInfo,
@@ -156,47 +189,27 @@ function listAjax(){
 			$( ".pro_listview" ).listview();
 			$( ".pro_listview" ).listview('refresh');
 			
-			$( ".pro_listview" ).sortable();
-			  $( ".pro_listview" ).disableSelection();
-			  $( ".pro_listview" ).on( "sortstop", function() {
-			    $( ".pro_listview" ).listview( "refresh" );
-			  });
-//			$(".pro_listview").sortable({
-//				'containment' : 'parent',
-//				'opacity' : 1,
-//				update: function(event, ui) {
-//					$('#updateHour').empty();
-//					$('.adm-form-group').show();
-//					for(var i=0; i<24; i++){ // 00시 ~ 23시30분 까지 지원 *db가 24시를 거부합니다.
-//						if(i<10){
-//							$('#updateHour').append('<option value='+'0'+i+'>'+'0'+i+'</option>');
-//							continue;
-//						}
-//						$('#updateHour').append('<option value='+i+'>'+i+'</option>');
-//					}
-//					$('#btnTimeSubmit').text('수정');
-//					$('#timeModal').modal('show').on('hidden.bs.modal',function(e){
-//						updateTime();
-//					}); // 모달 비활성화시 발생하는 이벤트, 아래의 캔슬버튼 처리 이걸로 통일함 
-//					$('#btnTimeSubmit').off('click').on('click', function(){
-//						var $target = ui.item;
-//						var contentId = $target.find('div.panel-heading').data('contentid');
-//						var time = $('#updateHour option:selected').val()+':'+$('#updateMin option:selected').val();
-//						$.getJSON('http://reizen.com:8890/scheduler/checkTime.do?scheduleNo='+scheduleNo+'&day='+currentDay+'&time='+time, function(result){
-//							if(result.status=='exist'){
-//								$('.control-label').remove();
-//								$('div.form-group').append('<label class="control-label" for="inputError1">중복된 시간입니다.</label>');
-//								$('div.form-group').addClass('has-error');
-//							} else {
-//								$target.find('span.time').text(time);
-//								updateTime();
-//								$('#timeModal, #insertRoute').modal('hide');
-//								$('#btnTimeSubmit').text('추가');
-//							} //else
-//						});
-//					});
-//				}
-//			})
+			$( ".pro_listview" ).sortable({
+				axis: "y",
+				delay: 150,
+				cancel: "i",
+				placeholder: "sortable-placeholder",
+				revert: true,
+				change: function(event,ui){
+					for(var i=0; i<24; i++){ // 00시 ~ 23시30분 까지 지원 *db가 24시를 거부합니다.
+						if(i<10){
+							$('#pro_updateHour').append('<option value='+'0'+i+'>'+'0'+i+'</option>');
+							continue;
+						}
+						$('#pro_updateHour').append('<option value='+i+'>'+i+'</option>');
+					}
+					pro_updateTarget = ui.item.find('span.pro_route_time');
+					$('#timeSelect').popup('open');
+				}
+			}).disableSelection().on("click", ".pro_memo_icon", function(){
+				swal('memo Click');
+			});
+			  
 			//			getWeather(lat,lon);
 		}
 	})
@@ -263,9 +276,11 @@ function viewAlarm(routeNo){
 
 function checkAlarm(){
 	var routeNos = [];
-	for (var i = 0; i < routes.length; i++) {
-		routeNos.push(routes[i].no);
+	for (var i = 0; i < pro_routes.length; i++) {
+		routeNos.push(pro_routes[i].no);
 	}
+	console.log('checkAlarm');
+	console.log(pro_routes);
 	$.ajax({
 		url : reizenUrl+'location/checkAlarm.do',
 		method: 'GET',
@@ -292,7 +307,7 @@ function checkAlarm(){
 function removeAjax($panel){
 	$.ajax({
 		dataType: 'json',
-		url: reizenUrl+'scheduler/routeDelete.do?routeNo='+$panel.attr("data-routeNo")+'&scheduleNo='+pro_sdno+'&day='+day+'&currentDate='+currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate(),
+		url: reizenUrl+'scheduler/routeDelete.do?routeNo='+$panel.attr("data-routeNo")+'&scheduleNo='+pro_sdno+'&day='+pro_day+'&currentDate='+pro_currentDate.getFullYear()+'-'+(pro_currentDate.getMonth()+1)+'-'+pro_currentDate.getDate(),
 		method: 'get',
 		success : function(result){
 			if (result.status != 'success') {
@@ -306,16 +321,15 @@ function removeAjax($panel){
 				text: "일정이 변경 됩니다.",
 				confirmButtonText: "확인"
 			});
-			listAjax($('.location'));
+			listAjax();
 		}
 	})
 }
 function updateTime(){
-	var $time = $('.pro_listview li span.time');
+	var $time = $('.pro_listview li span.pro_route_time');
 	var data=[];
 	var times;
 	var routeNo;
-
 	for(var i=0; i<$time.length; i++){
 		times = $time.eq(i).text();
 		routeNo = $('.pro_listview > li').eq(i).attr('data-routeNo');
@@ -327,6 +341,28 @@ function updateTime(){
 
 	indexAjax(data);
 }
+
+function indexAjax(data){
+	console.log(data);
+	$.ajax({
+		url: reizenUrl+'scheduler/arrayUpdate.do',
+		method:'post',
+		contentType:"application/json; charset=utf-8",
+		data: JSON.stringify({data:data, currentDate:pro_currentDate, scheduleNo:pro_sdno, day:pro_day}),
+		dataType:'json',
+		headers: {
+			"Content-Type":"application/json"
+		},
+		success: function(result){
+			if (result.status != 'success') {
+				console.log('일정 변경 에러');
+			}
+			console.log('일정 변경 성공');
+			listAjax($('.location'));
+		}
+	});
+}
+
 function memoAjax($this){
 	$.ajax({
 		url: reizenUrl+'scheduler/memo.do?contentId='+$this.attr('data-cid'),
@@ -337,14 +373,15 @@ function memoAjax($this){
 				console.log("메모 로딩 실패");
 				return;
 			}
-			console.log("메모 로딩 성공");
+			console.log("memoAjax : ");
+			console.log(result);
 			if(result.data.length == 0){ // 메모 데이터가 없다면
-				$this.parents('a').append('<div class="pro_memos"><i class="fa fa-github-alt" aria-hidden="true"></i><span> 아직 작성된 메모가 없어요⋯ </span></div>');
+				$this.parents('li').append('<div class="pro_memos"><i class="fa fa-github-alt" aria-hidden="true"></i><span> 아직 작성된 메모가 없어요⋯ </span></div>');
 				return;
 			} else {
 		      	var pro_memoBoxSource = $('#pro_memoBox').text();
 				var pro_memoBoxTemplate = Handlebars.compile(pro_memoBoxSource);
-				$this.parents('a').append(pro_memoBoxTemplate(result));
+				$this.parents('li').append(pro_memoBoxTemplate(result));
 			}
 		}
 	})

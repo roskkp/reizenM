@@ -25,7 +25,41 @@ div.loginWrap {
 }
 
 .login {
-	display: block;
+	display: block !important;
+}
+
+input#email, input#password {
+	width: 80%;
+	margin-bottom: 3%;
+}
+
+.login-label {
+	margin-bottom: 3%;
+}
+.profile_img {
+  width: 90px;
+  height: 90px;
+  border-radius: 45px;
+  display: none;
+}
+.index_profile {
+  padding: 10px;
+  height: 120px;
+  line-height: 10px;
+  position: relative;
+}
+.index_profile > .profile_nickName {
+  position: absolute;
+  font-size: 23px;
+  top: 20px;
+  right: 5px;
+}
+.index_profile > .login_edit {
+  right: 10px;
+  bottom: 25px;
+  font-size: 23px;
+  position: absolute;
+  display: none;
 }
 /*============   스케줄 팝업 버튼   ============*/
 .pro_sdno_selector {
