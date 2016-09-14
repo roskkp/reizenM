@@ -7,9 +7,6 @@ $(function(){
 			url : reizenUrl+'postscript/checkPostscript.do?scheduleNo='+scheduleNo,
 			method : 'GET',
 			dataType: 'json',
-			data:{
-				scheduleNo:scheduleNo
-			},
 			success : function(result){
 				if(result.status=='success'){
 					if(result.pass=='false'){

@@ -1,8 +1,8 @@
-var reizenUrl = "http://192.168.0.30:8080/";
+//var reizenUrl = "http://192.168.0.30:8080/";
 var pro_sdno = "";
 var pro_sdnos = "";
 var pro_sdnot = "";
-//var reizenUrl = 'http://192.168.0.42:8080/';
+var reizenUrl = 'http://192.168.0.42:8080/';
 var routes = [];
 
 var nickName = null;
@@ -73,7 +73,12 @@ $(function(){
 	    		$('#content').load('proceeding.html');	
 			}
     	} else {
-    		swal("진행중인 일정이 없습니다.");
+    		if (localStorage.getItem("nickName") != null) {
+    			swal("진행중인 일정이 없습니다.");				
+			} else {
+				swal("로그인 필요", "로그인 해주세요.", "warning"); 
+			}
+    		
     	}
     });
     
@@ -96,9 +101,14 @@ $(function(){
 
 function loginCheck(){
 	if (localStorage.getItem("nickName") != null) {
-		$('.index_profile h3').text(localStorage.getItem("nickName"));
+		$('.profile_nickName').text(localStorage.getItem("nickName"));
+		$('.login_edit').addClass('login');
 		$('.index_menu').addClass('login');
+		$('.profile_img').addClass('login');
 		$('.index_login').css('display','none');
+		nickName = localStorage.getItem("nickName");
+		dashNo = localStorage.getItem("dashNo");
+		$('.profile_img').attr("src", localStorage.getItem("profile_img"));
 	}
 	if (localStorage.getItem("pro_sdnos") != null) {
 		pro_sdnos = localStorage.getItem("pro_sdnos");
@@ -113,6 +123,7 @@ function login(){
 		data : {'email' : $('#email').val(), 'password' : $('#password').val() },
 		dataType : 'json',
 		success : function(result){
+			console.log(result);
 			if(result.status=='success'){
 				nickName = result.user.nickName;
 				if (result.activeScheduleNo[0] != null) {
@@ -129,9 +140,13 @@ function login(){
 				localStorage.setItem("dashNo", dashNo);
 				localStorage.setItem("pro_sdnos", pro_sdnos);
 				localStorage.setItem("pro_sdnot", pro_sdnot);
-				localStorage.setItem("userNo", userNo);
+				localStorage.setItem("userNo", result.user.userNo);
+				localStorage.setItem("profile_img", reizenUrl+"resources/images/thumbnail/"+result.user.thumbNail);
 				$('.index_menu').addClass('login');
-				$('.index_profile h3').text(nickName);
+				$('.login_edit').addClass('login');
+				$('.profile_img').addClass('login');
+				$('.profile_nickName').text(nickName);
+				$('.profile_img').attr("src",reizenUrl+"resources/images/thumbnail/"+result.user.thumbNail);
 				$('.index_login').css('display','none');
 				$('#content').load('main.html');
 			}else{
@@ -143,9 +158,20 @@ function login(){
 
 function logout(){
 	localStorage.clear();
+	pro_sdno = "";
+	pro_sdnos = "";
+	pro_sdnot = "";
+	routes = [];
+	nickName = null;
+	dashNo = null;
+	scheduleNo = null;
+	spot_cid = null;
+	spot_typeId = null;
 	$('.index_menu').removeClass('login');
+	$('.login_edit').removeClass('login');
+	$('.profile_img').removeClass('login');
 	$('.index_login').css('display','block');
-	$('.index_profile h3').text('');
+	$('.profile_nickName').text('');
 	$('#menu').panel('close');
 }
 
