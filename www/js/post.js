@@ -276,4 +276,22 @@ function getPictures(){
 	})
 }
 
-
+function deletePost(){
+	$(document).on('click','.del',function(){
+		$.ajax({
+			url : reizenUrl + 'postscript/deletePicts.do',
+			dataType : 'json',
+			data : {
+				pictureNo :$('.pictsNo').val()
+			},
+			method : 'post',
+			success : function(result) {
+				if (result.status != 'success') {
+					alert('후기 삭제 에러');
+				}
+				alert('성공');
+				location.reload();
+			}
+		})
+	});
+}
