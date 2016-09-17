@@ -5,7 +5,7 @@
 
 div#dash_profile {
   text-align: center;	
-  height: 120px;
+  height: 100px;
 }
 
 div#dash_name {
@@ -14,11 +14,11 @@ div#dash_name {
 }
 
 div#dash_thumb {
-	width: 90px;
-	height: 90px;
-	margin: 0 auto;
+	width: 70px;
+	height: 70px;
+	margin: 0 auto 10px auto;
 	background-size: cover;
-	border-radius: 90px;
+	border-radius: 70px;
 }
 
 /*============   tabs   ============*/
@@ -27,7 +27,29 @@ div#dash_thumb {
   	left: 0px;
 }
 
+#dash_navbar > ul {
+	border: 1px solid rgba(255, 255, 255, 0.7);	
+}
 
+li.dash_nav {
+	border-right: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+li.dash_nav:last-child {
+	border: none;
+}
+
+li.dash_nav > a {
+	border: none;
+	padding: 5px 3px;
+	cursor: pointer;
+}
+
+.dash_nav_fixed {
+	position: relative;
+	top: 0px;
+	background-color: rgba(255, 255, 255, 0.8);
+}
 
 
 ul.dash_list {
@@ -61,14 +83,25 @@ div.dash_image {
   border-top-right-radius: 5px;
 }
 
+div.dash_content {
+	color: #fff;	
+	padding: 10px 5px;
+}
+
 div.dash_content > h2 {
 	font-size: 0.9em;
-	color: #fff;
-	font-weight: bold;
+	font-weight: normal;
+	margin: 0;
+	padding-bottom: 5px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 100%;
 }
 
 div.dash_content > p {
 	font-size: 0.8em;
+	margin: 0;
 }
 
 a#btn_dash_top {
@@ -76,6 +109,9 @@ a#btn_dash_top {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
+	border-radius: 100%;
+	background-color: rgba(255, 255, 255, 0.35);
+	cursor: pointer;
 }
 
 

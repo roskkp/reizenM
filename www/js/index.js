@@ -2,7 +2,8 @@
 var pro_sdno = "";
 var pro_sdnos = "";
 var pro_sdnot = "";
-var reizenUrl = 'http://192.168.0.16:8080/';
+//var reizenUrl = 'http://192.168.0.16:8080/';
+var reizenUrl = 'http://52.78.165.93:8080/';
 var routes = [];
 
 var nickName = null;
@@ -11,6 +12,8 @@ var scheduleNo = null;
 
 var spot_cid;
 var spot_typeId;
+
+var back; // 이동 경로 저장 
 
 $(function(){
 	
@@ -27,6 +30,10 @@ $(function(){
 	$(document).off('click').on('click', '.btn_index_home', function() {
     	 $(location).attr('href', '');
     });
+	
+	$(document).on('click', '#btn_index_back', function(){
+		('#content').load(back+'.html');
+	});
     
     $(document).on('click', '#btn_index_login',function(){
     	$('#content').load('login.html',function(){
