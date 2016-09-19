@@ -13,8 +13,9 @@ var scheduleNo = null;
 var spot_cid;
 var spot_typeId;
 
-var back = null; // 이동 경로 저장 
-
+var mapX;
+var mapY;
+var back; // 이동 경로 저장 
 $(function(){
 	
 //	$('#content').load('post.html');
