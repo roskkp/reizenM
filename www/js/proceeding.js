@@ -6,7 +6,6 @@ var pro_routes = [];
 var pro_updateTarget;
 
 $(function() {
-	swal('proceeding entry');
 	$("body>[data-role='panel']").panel();
 
 	$('.pro_weather').load("weather.html");

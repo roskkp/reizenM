@@ -48,7 +48,6 @@ $(function(){
 });
 
 function getProfile(){
-	swal('dash entry :: '+dashNo);
 	$.getJSON(reizenUrl+'dashboard/getDash.do?boardNo='+dashNo, function(result){
 		if(result.status=='success'){
 			$('#dash_name').text(result.user.nickName);

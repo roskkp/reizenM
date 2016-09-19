@@ -55,6 +55,7 @@ li.post_list {
   padding: 10px 5px 10px 50px;
   position: relative;
   margin-bottom: 10px;
+  font-size: 1em;
 }
 
 li.post_list span.post_icon {
@@ -112,11 +113,11 @@ img.scriptImage {
 
 .btn_post, .btn_post_edit {
 	float: right;
-	color: steelblue;
+	color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.btn_post_take_photo, .btn_post_get_photo, .btn_post_cancel, .btn_addPost {
-	background-color: rgba(0, 0, 0, 0.1) !important;
+.btn_post_take_photo, .btn_post_get_photo, .btn_post_cancel, .btn_addPost, .btn_post_update {
+	color : #666 !important;
 }
 
 p.con > h3 {
@@ -126,4 +127,9 @@ p.con > h3 {
 
 #popupPost, #popupEdit {
 	padding: 10px;
+}
+
+div#select-20-button {
+	color: #666;
+	font-weight: normal;
 }

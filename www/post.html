@@ -15,9 +15,9 @@
 <div data-role="popup" id="popupPost" class="ui-corner-all">
 	<input type="hidden" name="routeNo" id='routeNo' /> 
 	<input type="hidden" name="scheduleNo " id='scheduleNo' /> 
-	<img id="displayArea" src=""> 
-	<a id="btn_post_take_photo">사진촬영하기</a>
-	<a id="btn_post_get_photo">사진불러오기</a>
+	<img class="displayArea" src=""> 
+	<a class="btn_post_take_photo">사진촬영하기</a>
+	<a class="btn_post_get_photo">사진불러오기</a>
 	<textarea name="content" rows="8" cols="40"></textarea>
 	<select name='transportation' class="transportation">
 		<option value='5'>-- 이동수단 --</option>
@@ -32,22 +32,20 @@
 </div>
 
 <div data-role="popup" id="popupEdit" class="ui-corner-all">
-  <img id="displayArea" src=""> 
-  <div class="ui-grid-a ui-responsive">
-	  <div class="ui-block-a"><a class="btn_post_take_photo ui-btn ui-corner-all">사진 촬영하기</a></div>
-	  <div class="ui-block-b"><a class="btn_post_get_photo ui-btn ui-corner-all">사진 불러오기</a></div>
-  </div>
-  <textarea name="content" rows="8" cols="40"></textarea>
-  <select name='select-choice-0' class="transportation">
+  <img class="displayArea" src=""> 
+  <a class="btn_post_take_photo">사진촬영하기</a>
+  <a class="btn_post_get_photo">사진불러오기</a>
+  <textarea name="edit_content" rows="8" cols="40"></textarea>
+  <select name='select-choice-0' class="edit_transportation">
     <option value='5'>-- 이동수단 --</option>
     <option value='1'>자동차</option>
     <option value='2'>기차</option>
     <option value='3'>버스</option>
     <option value='4'>비행기</option>
   </select> 
-  <input type="text" placeholder='가격' name='price'>
+  <input type="text" placeholder='가격' name='edit_price'>
   <a class="btn_post_cancel ui-btn ui-btn-inline" data-rel="back">취소</a>
-  <a class="btn_addPost ui-btn ui-btn-inline" data-transition="fade">저장</a>
+  <a class="btn_post_update ui-btn ui-btn-inline" data-transition="fade">저장</a>
 </div>
 
 <script id="postScheduleList" type="text/x-handlebars-template">
@@ -55,7 +53,7 @@
   {{#day route.day}}
     <li class="post_day">Day {{route.day}} <span class="post_date">{{splitTime route.time}}</span></li>
   {{/day}}
-  <li class="post_list">
+  <li class="post_list" data-route="{{route.routeNo}}">
    <span class="post_icon"><i data-type="{{route.location.typeId}}" class="fa" aria-hidden="true"></i></span>
     {{#if check}}
      <a class="btn_post_edit" data-position-to="window">후기수정</a>

@@ -2,34 +2,6 @@ $(function(){
 
 	getUser();
 	postscriptWriter();
-//	var user = localStorage.getItem('userNo');
-//	if( user ){
-//		$.ajax({
-//			url : reizenUrl+'postscript/checkPostscript.do?scheduleNo='+scheduleNo,
-//			method : 'GET',
-//			dataType: 'json',
-//			success : function(result){
-//				if(result.status=='success'){
-//					if(result.pass=='false'){
-//						getUser();
-//						postscriptWriter();  // 비작성자
-//						
-//					}else if(result.pass=='right'){
-//						getUser();
-//						postscriptWriter();   // 작성자
-//						
-//					}
-//				}else{
-//					alert('check proceeding status fail');
-//				}
-//			}, error  : function(){
-//				alert('ajax error');
-//			}
-//		});
-//	}else {
-//		getUser();
-//		postscriptWriter();   // 비작성자
-//	}
 	
 	initPhoneGap();
 	$('.btn_post_take_photo').click(function(){
@@ -43,13 +15,18 @@ $(function(){
 		overlayTheme : "b",
 		transition: "fade"
 	});
-	$('#btn_post_take_photo, #btn_post_get_photo').button();
+	
+	$('.btn_post_take_photo, .btn_post_get_photo').button();
 	$('textarea, input[type=text]').textinput();
-	$('.transportation').selectmenu();
-	$('#displayArea').hide();
+	$('.transportation, .edit_transportation').selectmenu();
+	$('.displayArea').hide();
 
 	$('.btn_addPost').on('click', function(){
 		addPost();
+	});
+	
+	$('.btn_post_update').on('click', function(){
+		updatePost();
 	});
 	
 	$('.btn_post_cancel').on('click', function(){
@@ -103,15 +80,17 @@ function postscriptWriter() {
 				var source = $('#postScheduleList').html();
 				var template = Handlebars.compile(source);
 				$('#post_content').append(template(result));
-				$('input#routeNo').val(result.list[0].route.routeNo);
 				
 				$('.btn_post').on('click', function(){
-					$('#displayArea').attr('src', '').hide();
+					$('input#routeNo').val($(this).parent('li').data('route'));
+					$('.displayArea').attr('src', '').hide();
 					$('textarea[name=content], input[name=price]').val('');
 					$('#popupPost').popup('open');
 				});
+				
 				$('.btn_post_edit').on('click', function(){
-					$('#displayArea').attr('src', '').hide();
+					$('input#routeNo').val($(this).parent('li').data('route'));
+					$('.displayArea').attr('src', '').hide();
 					$('textarea[name=content], input[name=price]').val('');
 					getPictures();
 					$('#popupEdit').popup('open');
@@ -158,35 +137,31 @@ var imageURI;
 function initPhoneGap(){
 	document.addEventListener("deviceready", onDeviceReady, true);
 }
-function onDeviceReady(){
-	navigator.notification.alert('장치준비됨', null, '폰갭API');
-}
-function takePhoto(){
-	navigator.camera.getPicture(onPhotoDataSuccess, onFail, 
-			{quality: 10, destinationType:Camera.DestinationType.DATA_URL, sourceType:Camera.PictureSourceType.CAMERA});
-}
 
-function onPhotoDataSuccess(imageData){
-	$('#displayArea').attr('src', 'data:image/jpeg;base64,'+imageData).fadeIn();
-	imageURI = image;
+function onDeviceReady(){}
+
+function takePhoto(){
+	navigator.camera.getPicture(onPhotoURISuccess, onFail, 
+			{quality: 50, destinationType:Camera.DestinationType.FILE_URI, sourceType:Camera.PictureSourceType.CAMERA});
 }
 
 function onFail(message){
 	alert('실패 : '+message);
 }
+
 function getPhoto(){
 	navigator.camera.getPicture(onPhotoURISuccess, onFail,
 			{quality: 50, destinationType:Camera.DestinationType.FILE_URI, sourceType:Camera.PictureSourceType.PHOTOLIBRARY});
 }
 
 function onPhotoURISuccess(image){
-	$('#displayArea').attr('src', image).fadeIn();
+	$('.displayArea').attr('src', image).fadeIn();
 	imageURI = image;
 }
 
 function addPost(){
 
-	var sdno = 956;
+	var sdno = scheduleNo;
 	var routeNo = $('input#routeNo').val();
 	var content = $('textarea[name=content]').val();
 	var transportation = $('select.transportation option:selected').val();
@@ -213,7 +188,39 @@ function addPost(){
 	options.params = params;
 
 	var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI('http://192.168.0.30:8080/postscript/addFile.do'), win, fail, options);
+	ft.upload(imageURI, encodeURI(reizenUrl+'postscript/addFile.do'), win, fail, options);
+}
+
+function updatePost(){
+
+	var sdno = scheduleNo;
+	var routeNo = $('input#routeNo').val();
+	var content = $('textarea[name=edit_content]').val();
+	var transportation = $('select.edit_transportation option:selected').val();
+	var price = $('input[name=edit_price]').val();
+
+	var options = new FileUploadOptions();
+	options.fileKey = "file";
+	options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+	options.mimeType = "image/jpeg";
+	options.chunkedMode = false;
+	options.headers = {
+			Connection: "close"
+	}
+
+	var params = {};
+
+	params.type = "jpeg";
+	params.scheduleNo = sdno;
+	params.routeNo = routeNo;
+	params.content = content;
+	params.transportation = transportation;
+	params.price = price;
+
+	options.params = params;
+
+	var ft = new FileTransfer();
+	ft.upload(imageURI, encodeURI(reizenUrl+'postscript/updateFile.do'), win, fail, options);
 }
 
 var win = function (r) {
@@ -249,39 +256,8 @@ Handlebars.registerHelper('stime', function(time){
 	return out;
 });
 
-
-/****************getPictures********************/
-function getPictures(){
-	alert('들어왔나여?')
-	$.ajax({
-		url : reizenUrl + "postscript/selectPict.do",
-		method : 'post',
-		dataType : 'json',
-		data : {
-			routeNo :$('#updateRouteNo').val()
-		},
-		success : function(result) {
-			if (result.status == 'success') {
-				alert('들어왔나여?')
-
-				var data = result.data;
-				for (var i = 0; i < data.length; i++) {
-					console.log(data[i].transportation);
-					/*$('#updatefile').css({'background' : 'url(\''
-					+'/resources/images/viewSchedule/' +data[i].picturePath});*/
-					$('#updatePrice').val(data[i].price);
-					$(".select").val(data[i].transportation);
-					$('.cont').val(data[i].content);
-
-				}
-			}
-		}
-	})
-}
-
 function deletePost(pictureNo){
 	
-	var routeNo = $('#routeNo').val();
 	var $this= $(this);
 	
 	swal({   
@@ -298,10 +274,8 @@ function deletePost(pictureNo){
 				url : reizenUrl+'postscript/deletePicts.do',
 				method : 'POST',
 				dataType : 'json',
-			    contentType: "application/json; charset=utf-8",
 				data : {
-					'pictureNo' : pictureNo,
-					'routeNo' : routeNo
+					pictureNo : pictureNo
 				},
 				success : function(result) {
 					if (result.status != 'success') {
@@ -339,13 +313,9 @@ function getPictures(){
 				console.log('후기 수정 load success');
 				var data = result.data;
 			for (var i = 0; i < data.length; i++) {
-				/*$('#updatefile').css({'background' : 'url(\''
-					+'/resources/images/viewSchedule/' +data[i].picturePath});*/
-				$('input[name=price]').val(data[i].price).attr('selected', 'selected');
-				$(".transportation").val(data[i].transportation);
-				/*$('.select-options').attr(data[i].transportation);*/
-				$('textarea[name=content]').val(data[i].content);
-				
+				$('input[name=edit_price]').val(data[i].price).attr('selected', 'selected');
+				$(".tedit_ransportation").val(data[i].transportation);
+				$('textarea[name=edit_content]').val(data[i].content);
 				}
 			}
 		}

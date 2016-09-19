@@ -13,7 +13,7 @@ var scheduleNo = null;
 var spot_cid;
 var spot_typeId;
 
-var back; // 이동 경로 저장 
+var back = null; // 이동 경로 저장 
 
 $(function(){
 	
@@ -97,7 +97,6 @@ $(function(){
 	
     $(document).on('click', '.btn_index_dash', function() {
     	if(dashNo!=null){
-    		swal('dash click');
     	    $('.index_content').load('dashboard.html');
     	}else{
     		swal("로그인 필요", "로그인 해주세요.", "warning"); 
