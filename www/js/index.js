@@ -12,6 +12,8 @@ var scheduleNo = null;
 var spot_cid;
 var spot_typeId;
 
+var mapX;
+var mapY;
 $(function(){
 	
 //	$('#content').load('post.html');

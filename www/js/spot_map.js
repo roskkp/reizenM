@@ -22,7 +22,7 @@ $(function(){
 
 function initMap(){
 	
-	var point = new google.maps.LatLng(37.30981, 126.87560);
+	var point = new google.maps.LatLng(mapY, mapX);
 	if(navigator.geolocation){
 		$('.spot_map').gmap({
 			'center' : point,
