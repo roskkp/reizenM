@@ -1,34 +1,35 @@
 $(function(){
 
-	scheduleNo = location.href.substr(location.href.lastIndexOf('=') + 1);
-	var user = localStorage.getItem('userNo');
-	if( user ){
-		$.ajax({
-			url : reizenUrl+'postscript/checkPostscript.do?scheduleNo='+scheduleNo,
-			method : 'GET',
-			dataType: 'json',
-			success : function(result){
-				if(result.status=='success'){
-					if(result.pass=='false'){
-						getUser();
-						postscriptWriter();  // 비작성자
-						
-					}else if(result.pass=='right'){
-						getUser();
-						postscriptWriter();   // 작성자
-						
-					}
-				}else{
-					alert('check proceeding status fail');
-				}
-			}, error  : function(){
-				alert('ajax error');
-			}
-		});
-	}else {
-		getUser();
-		postscriptWriter();   // 비작성자
-	}
+	getUser();
+	postscriptWriter();
+//	var user = localStorage.getItem('userNo');
+//	if( user ){
+//		$.ajax({
+//			url : reizenUrl+'postscript/checkPostscript.do?scheduleNo='+scheduleNo,
+//			method : 'GET',
+//			dataType: 'json',
+//			success : function(result){
+//				if(result.status=='success'){
+//					if(result.pass=='false'){
+//						getUser();
+//						postscriptWriter();  // 비작성자
+//						
+//					}else if(result.pass=='right'){
+//						getUser();
+//						postscriptWriter();   // 작성자
+//						
+//					}
+//				}else{
+//					alert('check proceeding status fail');
+//				}
+//			}, error  : function(){
+//				alert('ajax error');
+//			}
+//		});
+//	}else {
+//		getUser();
+//		postscriptWriter();   // 비작성자
+//	}
 	
 	initPhoneGap();
 	$('.btn_post_take_photo').click(function(){
@@ -42,14 +43,10 @@ $(function(){
 		overlayTheme : "b",
 		transition: "fade"
 	});
-	$('.btn_post_cancel').button();
+	$('#btn_post_take_photo, #btn_post_get_photo').button();
 	$('textarea, input[type=text]').textinput();
 	$('.transportation').selectmenu();
 	$('#displayArea').hide();
-
-	
-
-	
 
 	$('.btn_addPost').on('click', function(){
 		addPost();
@@ -58,12 +55,16 @@ $(function(){
 	$('.btn_post_cancel').on('click', function(){
 		$('#popupPost, #popupEdit').popup('close');
 	});
+	
+	$('#content').on('click', '.btn_post_delete', function(){
+		deletePost($(this).data('picno'));
+	});
 
 });
 
 function getUser() {
 	$.ajax({
-		url : reizenUrl+'postscript/userPost.do?scheduleNo='+956,
+		url : reizenUrl+'postscript/userPost.do?scheduleNo='+scheduleNo,
 		method : 'GET',
 		dataType : 'json',
 		success : function(result){
@@ -87,7 +88,7 @@ function getUser() {
 
 function postscriptWriter() {
 	$.ajax({
-		url : reizenUrl+'postscript/postscript.do?scheduleNo='+956,
+		url : reizenUrl+'postscript/postscript.do?scheduleNo='+scheduleNo,
 		dataType : 'json',
 		method : 'GET',
 		success : function(result){
@@ -112,22 +113,23 @@ function postscriptWriter() {
 				$('.btn_post_edit').on('click', function(){
 					$('#displayArea').attr('src', '').hide();
 					$('textarea[name=content], input[name=price]').val('');
+					getPictures();
 					$('#popupEdit').popup('open');
 				});
 				
 				for (var i = 0; i < $('.tran').length; i++) {
-					switch ($($('.tran')[i]).attr('data-trans')) {
-					case '1':
-						$($('.tran')[i]).text('이동수단 : 자동차')
+					switch ($($('.tran')[i]).data('trans')) {
+					case 1:
+						$($('.tran')[i]).html('이동수단 : 자동차');
 						break;
-					case '2':
-						$($('.tran')[i]).text('이동수단 : 기차')
+					case 2:
+						$($('.tran')[i]).html('이동수단 : 기차');
 						break;
-					case '3':
-						$($('.tran')[i]).text('이동수단 : 버스')
+					case 3:
+						$($('.tran')[i]).html('이동수단 : 버스');
 						break;
-					case '4':
-						$($('.tran')[i]).text('이동수단 : 차')
+					case 4:
+						$($('.tran')[i]).html('이동수단 : 차');
 						break;
 					}
 				}
@@ -150,6 +152,7 @@ function postscriptWriter() {
 		}
 	});
 }
+
 var imageURI;
 
 function initPhoneGap(){
@@ -276,4 +279,75 @@ function getPictures(){
 	})
 }
 
+function deletePost(pictureNo){
+	
+	var routeNo = $('#routeNo').val();
+	var $this= $(this);
+	
+	swal({   
+		title: "작성한 후기를 삭제하시겠습니까?",   
+		text: "확인 버튼을 누르면 삭제가 완료됩니다.",   
+		type: "warning",   
+		showCancelButton: true,   
+		confirmButtonColor: "#DD6B55",   
+		confirmButtonText: "확인",   
+		cancelButtonText: "취소",   
+		closeOnConfirm: false }, 
+		function(){
+			$.ajax({
+				url : reizenUrl+'postscript/deletePicts.do',
+				method : 'POST',
+				dataType : 'json',
+			    contentType: "application/json; charset=utf-8",
+				data : {
+					'pictureNo' : pictureNo,
+					'routeNo' : routeNo
+				},
+				success : function(result) {
+					if (result.status != 'success') {
+						alert('후기 삭제 에러');
+					}
+					  swal({
+						    title: "후기",
+						    text: "삭제되었습니다.",
+						    timer: 3000,
+						    confirmButtonText: "Ok!", 
+						  }, function(){
+						    window.location.reload();
+						  });
+						  setTimeout(function() {
+						    window.location.reload();
+						  }, 3000);
+			
+				}
+			})
+			 
+	});
+}
 
+/****************getPictures********************/
+function getPictures(){
+	$.ajax({
+		url : reizenUrl + "postscript/selectPict.do",
+		method : 'post',
+		dataType : 'json',
+		data : {
+			routeNo :$('#routeNo').val()
+		},
+		success : function(result) {
+			if (result.status == 'success') {
+				console.log('후기 수정 load success');
+				var data = result.data;
+			for (var i = 0; i < data.length; i++) {
+				/*$('#updatefile').css({'background' : 'url(\''
+					+'/resources/images/viewSchedule/' +data[i].picturePath});*/
+				$('input[name=price]').val(data[i].price).attr('selected', 'selected');
+				$(".transportation").val(data[i].transportation);
+				/*$('.select-options').attr(data[i].transportation);*/
+				$('textarea[name=content]').val(data[i].content);
+				
+				}
+			}
+		}
+	})
+}

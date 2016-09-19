@@ -142,10 +142,14 @@ function fixNav(){
 	   if (st > lastScrollTop){
 	       // downscroll code
 		   $('#btn_dash_top').fadeIn();
+		   $('#dash_navbar').addClass('dash_nav_fixed');
 		   $('#dash_navbar').css('position', 'fixed').css('top', top);
+		   $('a.dash_nav_link').css('color', '#666');
 	   } else {
 	      // upscroll code
+		   $('#dash_navbar').removeClass('dash_nav_fixed');
 		   $('#dash_navbar').css('position', 'relative').css('top', 0);
+		   $('a.dash_nav_link').css('color', '#fff');
 	   }
 	});
 }

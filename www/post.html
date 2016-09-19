@@ -19,9 +19,9 @@
 	<a id="btn_post_take_photo">사진촬영하기</a>
 	<a id="btn_post_get_photo">사진불러오기</a>
 	<textarea name="content" rows="8" cols="40"></textarea>
-	<select name='transportation' class="transportation" data-inline="true">
+	<select name='transportation' class="transportation">
 		<option value='5'>-- 이동수단 --</option>
-		<option value='1' rel='icon-temperature'>자동차</option>
+		<option value='1'>자동차</option>
 		<option value='2'>기차</option>
 		<option value='3'>버스</option>
 		<option value='4'>비행기</option>
@@ -32,8 +32,6 @@
 </div>
 
 <div data-role="popup" id="popupEdit" class="ui-corner-all">
-  <input type="hidden" name="routeNo" id='routeNo' /> 
-  <input type="hidden" name="scheduleNo " id='scheduleNo' /> 
   <img id="displayArea" src=""> 
   <div class="ui-grid-a ui-responsive">
 	  <div class="ui-block-a"><a class="btn_post_take_photo ui-btn ui-corner-all">사진 촬영하기</a></div>
@@ -42,7 +40,7 @@
   <textarea name="content" rows="8" cols="40"></textarea>
   <select name='select-choice-0' class="transportation">
     <option value='5'>-- 이동수단 --</option>
-    <option value='1' rel='icon-temperature'>자동차</option>
+    <option value='1'>자동차</option>
     <option value='2'>기차</option>
     <option value='3'>버스</option>
     <option value='4'>비행기</option>
@@ -69,12 +67,11 @@
 {{#if check}}
 <li class="post_review">
     <div class="postBox">
-      <a class='btn_post_delete' >×</a>
+      <a class="btn_post_delete" data-picno="{{pictureNo}}">×</a>
       <div class="posts">
         <input type="hidden" class="pictsNo" value="{{pictureNo}}">
-        <img class="scriptImage" src="http://192.168.0.30:8080/resources/images/viewSchedule/{{picturePath}}">
-        <p class ="con"> <h3>{{content}}</h3>    {{post.regDate}}<br/>가격 : {{price}}원</p>  
-        <p class="port"><a class='tran' data-trans="{{transportation}}"></a></p>
+        <img class="scriptImage" src="http://52.78.165.93:8080/resources/images/viewSchedule/{{picturePath}}">
+        <p class ="con"> <h3>{{content}}</h3>    {{post.regDate}}<br/>가격 : {{price}}원<br /><span class="tran" data-trans="{{transportation}}"></span></p>  
       </div>
   </div>
   </li>
