@@ -60,7 +60,10 @@ $(function(){
        $('#content').load('search_sc.html');
     });
 	
-	$('#routeSelect').popup();
+	$('#routeSelect').popup({
+		overlayTheme : "b",
+		transition: "fade"
+	});
 	
     $(document).on('click', '.btn_index_proceeding', function(){
     	loginCheck();
@@ -98,7 +101,7 @@ $(function(){
 	
     $(document).on('click', '.btn_index_dash', function() {
     	if(dashNo!=null){
-    	    $('.index_content').load('dashboard.html');
+    	    $('#content').load('dashboard.html');
     	}else{
     		swal("로그인 필요", "로그인 해주세요.", "warning"); 
     	}
@@ -130,7 +133,6 @@ function login(){
 		data : {'email' : $('#email').val(), 'password' : $('#password').val() },
 		dataType : 'json',
 		success : function(result){
-			console.log(result);
 			if(result.status=='success'){
 				nickName = result.user.nickName;
 				if (result.activeScheduleNo[0] != null) {

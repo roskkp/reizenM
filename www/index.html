@@ -27,11 +27,11 @@
 		</div>
 		<!-- /header -->
 
-		<div id="content" data-role="content" class="index_content">
+		<div id="content" class="index_content" data-role="content">
       <!-- <div data-role="popup" id="popup" data-overlay-theme="b" data-theme="b" data-corners="false"> -->
-
     </div>
     <!-- /content -->
+    
   </div>
   <!-- /page -->
   
@@ -39,7 +39,9 @@
   <div data-role="panel" id="menu" data-position="left"
     data-display="push" data-theme="b">
     <div class="index_login">
-      <a id="btn_index_login" href="#"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+      <a id="btn_index_login" class="btn_index_login" href="#">reizen 로그인</a>
+      <a id="btn_index_login_naver" class="btn_index_login" href="#">naver 로그인</a>
+      <a id="btn_index_login_google" class="btn_index_login" href="#">google 로그인</a>
     </div>
     <div class="index_profile">
       <img class="profile_img" src="">
@@ -62,10 +64,12 @@
   <!--  popup  -->
   <div data-role="popup" id="routeSelect">
   </div>
+  
   <div data-role="popup" id="memo-popup" data-overlay-theme="b" data-theme="b" data-corners="false">
 	<p>작업선택</p>
 	<span id="removeMemo">삭제</span>
   </div>
+  
   <!-- sparql -->
 	<script type="text/sparql" id="baseSparql">
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

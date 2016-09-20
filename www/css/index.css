@@ -1,5 +1,19 @@
 @CHARSET "UTF-8";
 
+div.index_back {
+  width: 100%;
+  height: 100%;
+  background-image: url(../main02.png);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: -550px 0;
+  position: absolute;
+  top: 0; left: 0;	
+  z-index: -1;
+  filter : brightness(80%);
+  -webkit-filter : brightness(80%);
+}
+
 div.header {
 	background-color: #fff;
 }
@@ -11,10 +25,31 @@ div.mainMenus > div {
 .btn_index_home {
 	color: steelblue !important;
 	cursor: pointer;
+	font-weight: bold !important;
 }
 
+div.index_cont {
+	text-align: center;
+	color: #fff;
+	font-size: 1.2em;
+	margin-bottom: 40px;
+}
+
+div.index_content > h2 {
+	font-size: 2em;
+}
 
 /*============   로그인   ============*/
+
+.btn_index_login {
+  display: block;	
+  text-decoration: none;
+  text-align: left;
+  padding: 10px 20px;
+  color: #fff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 10px;
+}
 
 div.loginWrap {
 	margin : 15px;
@@ -26,6 +61,10 @@ div.loginWrap {
 
 .login {
 	display: block !important;
+}
+
+.login > li > a {
+  border-radius: 0 !important;
 }
 
 input#email, input#password {
@@ -61,15 +100,25 @@ input#email, input#password {
   position: absolute;
   display: none;
 }
+
+
 /*============   스케줄 팝업 버튼   ============*/
 .pro_sdno_selector {
-    width: 49%;
-    height: 28px;
-    margin-right: 1%;
+    width: 100%;
+    height: 30px;
+    margin-bottom: 2%;
     line-height: 0px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+.pro_sdno_selector:last-child {
+	margin-bottom: 0px;
 }
 
 #routeSelect {
    width: 250px;
-   padding: 1%;
+   padding: 5%;
+   background-color: rgba(255, 255, 255, 0.8);
 }

@@ -4,7 +4,9 @@ $(function(){
       active : 0
     });
     
-    $('.spot_nav').navbar();
+    $('.spot_nav').navbar({
+    	defaults: true
+    });
 	
 	$('#content').off('click').on('click', '#btn_spot_map', function(){
 		$('#content').load('spot_map.html');

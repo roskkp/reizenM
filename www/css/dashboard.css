@@ -6,6 +6,7 @@
 div#dash_profile {
   text-align: center;	
   height: 100px;
+  margin-bottom: 20px;
 }
 
 div#dash_name {

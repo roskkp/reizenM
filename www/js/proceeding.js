@@ -206,7 +206,7 @@ function listAjax(){
 					$('#timeSelect').popup('open');
 				}
 			}).disableSelection().on("click", ".pro_memo_icon", function(){
-				swal('memo Click');
+//				swal('memo Click');
 			});
 			  
 			//			getWeather(lat,lon);
