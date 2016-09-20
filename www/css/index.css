@@ -65,6 +65,19 @@ div.loginWrap {
 
 .login > li > a {
   border-radius: 0 !important;
+  background-color: transparent !important;
+}
+
+.login > li:last-child > a {
+	border-bottom: none;
+}
+
+.login > li:first-child > a, .login > li:first-child > a:hover {
+	border-top: none !important;
+}
+
+.login > li > a:hover {
+	border-top: 1px solid #fff !important;
 }
 
 input#email, input#password {

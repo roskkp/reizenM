@@ -127,9 +127,23 @@ p.con > h3 {
 
 #popupPost, #popupEdit {
 	padding: 10px;
+	background-color: rgba(255, 255, 255, 0.8);
 }
 
-div#select-20-button {
+#popupPost > div.ui-btn, #popupEdit > div.ui-btn {
+	background-color: #fff;
+}
+
+.btn_post_cancel, .btn_addPost, .btn_post_update {
+	background-color: #fff !important;
+}
+
+#popupPost > div.ui-select, #popupEdit > div.ui-select {
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+span.transportation {
 	color: #666;
 	font-weight: normal;
 }
