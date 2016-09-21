@@ -427,4 +427,3 @@ function checkDays(scheduleNo){
 		}
 	})
 }
->>>>>>> 20033be046123b183de298385ba043b03ff772bd
