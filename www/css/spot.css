@@ -183,3 +183,11 @@ ul.spot_memo > li {
 	color: #333;
 	text-shadow: none;
 }
+
+
+
+/******** addSpot-popup ********/
+#addSpot-popup {
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: 5%;
+}

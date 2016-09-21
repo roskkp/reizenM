@@ -70,6 +70,34 @@
 	<span id="removeMemo">삭제</span>
   </div>
   
+  <div data-role="popup" id="addSpot-popup">
+    <h4 class="modal-title adm-title" id="addModalLabel">어디에 추가 할까요?</h4>
+    <select class="form-control scheduleSelectList adm-formMargin">
+      <option class="default" value="">일정을 선택해주세요</option>
+    </select> <select class="form-control dayList adm-formMargin">
+      <option class="default">날짜를 선택해주세요</option>
+    </select>
+    <div class="form-group timechecker adm-form-group">
+      <p>시간을 선택해주세요.</p>
+      <select id="updateHour" class="form-control adm-form-control">
+      </select> : <select id="updateMin" class="form-control adm-form-control">
+        <option value="00" selected>00</option>
+        <option value="30">30</option>
+      </select>
+    </div>
+  </div>
+  
+ <script id="scheduleList" type="text/x-handlebarsx-template">
+{{#each this}}
+  <option data-no="{{scheduleNo}}">{{title}}</option>
+{{/each}}
+</script>
+<script id="dayList" type="text/x-handlebarsx-template">
+{{#this}}
+  <option data-day="{{day}}">{{time}}</option>
+{{/this}}
+</script>
+  
   <!-- sparql -->
 	<script type="text/sparql" id="baseSparql">
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

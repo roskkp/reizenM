@@ -41,6 +41,14 @@ $(function(){
 	$('#removeMemo').on('click',function(){
 		deleteMemo();
 	})
+	
+	$('#content').on('click','#btn_spot_plus',function(){
+		if (localStorage.getItem('userNo') != null) {
+			checkSchedule();
+		} else {
+			swal("로그인 필요", "로그인 해주세요.", "warning"); 
+		}
+	})
 });
 
 function init(){
@@ -358,4 +366,39 @@ function deleteMemo(){
 				}
 			})
 		});
+}
+
+function checkSchedule(){
+	$.ajax({
+		url : nodeUrl + '8889/scheduler/checkSchedule.do',
+		method : 'post',
+		data : {
+			userNo : localStorage.getItem('userNo')
+		},
+		dataType : 'json',
+		success : function(result) {
+			if(result.length>0){ // 스케줄이 있다면
+				var scheduleSource = $('#scheduleList').html();
+				var scheduleTemplate = Handlebars.compile(scheduleSource);
+				$('select.scheduleSelectList').append(scheduleTemplate(result));
+				$('select.scheduleSelectList ').selectmenu();
+				$('select.scheduleSelectList ').selectmenu('refresh');
+				$('.dayList').css('display','none');
+				$('.timechecker').css('display','none');
+				$('#addSpot-popup').popup('open');
+			}else { // 스케줄이 없다면
+				swal({   
+					title: "일정이 없네요 !",   
+					text: "새로운 일정을 만드시겠어요?",   
+					type: "info",  
+					showCancelButton: true,   
+					confirmButtonColor: "#DD6B55",   
+					confirmButtonText: "Yes",   
+					closeOnConfirm: false }, 
+					function(){ // 메인에서의 접근과 여타 페이지에서의 접근 경로가 달라서 절대경로 써야합니다
+						// 미 구현...
+					}); // swal
+			}
+		}
+	});
 }
