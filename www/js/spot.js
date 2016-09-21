@@ -380,9 +380,9 @@ function checkSchedule(){
 			if(result.length>0){ // 스케줄이 있다면
 				var scheduleSource = $('#scheduleList').html();
 				var scheduleTemplate = Handlebars.compile(scheduleSource);
-				$('select.scheduleSelectList').append(scheduleTemplate(result));
-				$('select.scheduleSelectList ').selectmenu();
-				$('select.scheduleSelectList ').selectmenu('refresh');
+				$('#scheduleSelectList').append(scheduleTemplate(result));
+				$('#scheduleSelectList').selectmenu();
+				$('#scheduleSelectList').selectmenu('refresh');
 				$('.dayList').css('display','none');
 				$('.timechecker').css('display','none');
 				$('#addSpot-popup').popup('open');

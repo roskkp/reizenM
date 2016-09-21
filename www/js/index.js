@@ -23,7 +23,7 @@ $(function(){
 //	$('#content').load('post.html');
 	
 	$('.index_menu').listview();
-    
+	
 	loginCheck();
 	
     $("body>[data-role='panel']").panel();
