@@ -416,8 +416,8 @@ function checkDays(scheduleNo){
 				var daySource = $('#dayList').html();
 				var dayTemplate = Handlebars.compile(daySource);
 				$('select.daydatas').append(dayTemplate(result));
-				$('select.daydatas ').selectmenu();
-				$('select.daydatas ').selectmenu('refresh');
+				$('select.daydatas').selectmenu();
+				$('select.daydatas').selectmenu('refresh');
 				$('.dayList').css('display','block');
 				event.stopPropagation();
 			}else { //day가 없다면 .... 인데 ... day가 없는 일정이 있을 수 없으니까 .. 에러...

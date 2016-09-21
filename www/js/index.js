@@ -131,6 +131,7 @@ $(function(){
 			}
 			$('select.poptime').selectmenu();
 			$('select.poptime').selectmenu('refresh');
+			$('#updateMin, #updateHour').parents('.ui-select').css('width', '47%').css('display', 'inline-block');
 			$('#popbtnTimeSubmit').css('display','block');
 			$('.timechecker').css('display','block');
 		}
