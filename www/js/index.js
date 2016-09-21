@@ -21,6 +21,7 @@ $(function(){
 //	$('#content').load('post.html');
 	
 	$('.index_menu').listview();
+	$('input[name=email]').textinput();
     
 	loginCheck();
 	
