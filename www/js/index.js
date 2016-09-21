@@ -2,8 +2,10 @@
 var pro_sdno = "";
 var pro_sdnos = "";
 var pro_sdnot = "";
-//var reizenUrl = 'http://192.168.0.16:8080/';
+//var reizenUrl = 'http://192.168.0.42:8080/';
+//var nodeUrl = 'http://192.168.0.42:';
 var reizenUrl = 'http://52.78.165.93:8080/';
+var nodeUrl = 'http://52.78.165.93:';
 var routes = [];
 
 var nickName = null;
@@ -65,6 +67,11 @@ $(function(){
 		transition: "fade"
 	});
 	
+	$('#addSpot-popup').popup({
+		overlayTheme : "b",
+		transition: "fade"
+	});
+	
     $(document).on('click', '.btn_index_proceeding', function(){
     	loginCheck();
     	if( pro_sdnos != "" ){
@@ -105,6 +112,16 @@ $(function(){
     		swal("로그인 필요", "로그인 해주세요.", "warning"); 
     	}
     });
+    
+	$('.scheduleSelectList').on('change',function(){
+		alert('scheduleSelectList change');
+		if($(this).data('no')==null){ // 일정을 선택해주세요 선택시
+		}
+	})
+	
+	$('.dayList').on('change',function(){
+		alert('dayList change');
+	})
 	
 });
 
