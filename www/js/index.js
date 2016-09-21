@@ -80,7 +80,6 @@ $(function(){
     			console.log('check end point');
 			} else {
 	    		pro_sdno = pro_sdnos;
-	    		swal("진행중인 일정이 1개 있습니다. : "+pro_sdno);
 	    		$('#content').load('proceeding.html');	
 			}
     	} else {
