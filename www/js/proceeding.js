@@ -187,29 +187,7 @@ function listAjax(){
 			$('.pro_listview').empty().append(pro_routeBoxTemplate(result));
 			$( ".pro_listview" ).listview();
 			$( ".pro_listview" ).listview('refresh');
-			
-			$( ".pro_listview" ).sortable({
-				axis: "y",
-				delay: 150,
-				cancel: "i",
-				placeholder: "sortable-placeholder",
-				revert: true,
-				change: function(event,ui){
-					for(var i=0; i<24; i++){ // 00시 ~ 23시30분 까지 지원 *db가 24시를 거부합니다.
-						if(i<10){
-							$('#pro_updateHour').append('<option value='+'0'+i+'>'+'0'+i+'</option>');
-							continue;
-						}
-						$('#pro_updateHour').append('<option value='+i+'>'+i+'</option>');
-					}
-					pro_updateTarget = ui.item.find('span.pro_route_time');
-					$('#timeSelect').popup('open');
-				}
-			}).disableSelection().on("click", ".pro_memo_icon", function(){
-//				swal('memo Click');
-			});
-			  
-			//			getWeather(lat,lon);
+			getWeather(lat,lon);
 		}
 	})
 }

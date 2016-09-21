@@ -370,7 +370,7 @@ function deleteMemo(){
 
 function checkSchedule(){
 	$.ajax({
-		url : nodeUrl + '8889/scheduler/checkSchedule.do',
+		url : nodeUrl + ':8889/scheduler/checkSchedule.do',
 		method : 'post',
 		data : {
 			userNo : localStorage.getItem('userNo')
@@ -378,6 +378,7 @@ function checkSchedule(){
 		dataType : 'json',
 		success : function(result) {
 			if(result.length>0){ // 스케줄이 있다면
+				$('select.scheduleSelectList').children().not('.default').remove();
 				var scheduleSource = $('#scheduleList').html();
 				var scheduleTemplate = Handlebars.compile(scheduleSource);
 				$('#scheduleSelectList').append(scheduleTemplate(result));
@@ -385,6 +386,7 @@ function checkSchedule(){
 				$('#scheduleSelectList').selectmenu('refresh');
 				$('.dayList').css('display','none');
 				$('.timechecker').css('display','none');
+				$('#popbtnTimeSubmit').css('display','none');
 				$('#addSpot-popup').popup('open');
 			}else { // 스케줄이 없다면
 				swal({   
@@ -398,6 +400,29 @@ function checkSchedule(){
 					function(){ // 메인에서의 접근과 여타 페이지에서의 접근 경로가 달라서 절대경로 써야합니다
 						// 미 구현...
 					}); // swal
+			}
+		}
+	})
+}
+
+function checkDays(scheduleNo){
+	$.ajax({
+		url : nodeUrl + ':8889/scheduler/checkDay.do?scheduleNo='+scheduleNo,
+		method : 'get',
+		dataType : 'json',
+		success : function(result) {
+			if(result.length>0){ // day가 있다면 ....? day가 없는 일정이 있을 수 있나 ?
+				$('select.dayList').children().not('.default').remove();
+				var daySource = $('#dayList').html();
+				var dayTemplate = Handlebars.compile(daySource);
+				$('select.daydatas').append(dayTemplate(result));
+				$('select.daydatas ').selectmenu();
+				$('select.daydatas ').selectmenu('refresh');
+				$('.dayList').css('display','block');
+				event.stopPropagation();
+			}else { //day가 없다면 .... 인데 ... day가 없는 일정이 있을 수 없으니까 .. 에러...
+				swal("Failed!", "일정 조회 실패. 관리자에게 문의하세요. ", "error"); 
+				event.stopPropagation();
 			}
 		}
 	})

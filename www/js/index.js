@@ -5,7 +5,7 @@ var pro_sdnot = "";
 //var reizenUrl = 'http://192.168.0.42:8080/';
 //var nodeUrl = 'http://192.168.0.42:';
 var reizenUrl = 'http://52.78.165.93:8080/';
-var nodeUrl = 'http://52.78.165.93:';
+var nodeUrl = 'http://52.78.165.93';
 var routes = [];
 
 var nickName = null;
@@ -114,15 +114,62 @@ $(function(){
     });
     
 	$('.scheduleSelectList').on('change',function(){
-		alert('scheduleSelectList change');
 		if($(this).data('no')==null){ // 일정을 선택해주세요 선택시
+			checkDays($('select.scheduleSelectList option:selected').data('no'));
 		}
 	})
 	
-	$('.dayList').on('change',function(){
-		alert('dayList change');
+	$('.daydatas').on('change',function(e){
+		if($(this).data('day')==null){ // 일정을 선택해주세요 선택시
+			for(var i=0; i<24; i++){ // 00시 ~ 23시30분 까지 지원 *db가 24시를 거부합니다.
+				if(i<10){
+					$('#updateHour').append('<option value='+'0'+i+'>'+'0'+i+'</option>');
+					continue;
+				}
+				$('#updateHour').append('<option value='+i+'>'+i+'</option>');
+			}
+			$('select.poptime').selectmenu();
+			$('select.poptime').selectmenu('refresh');
+			$('#popbtnTimeSubmit').css('display','block');
+			$('.timechecker').css('display','block');
+		}
 	})
 	
+	$('#popbtnCancel').on('click',function(){
+		$('#addSpot-popup').popup('close');
+	})
+	
+	$('#popbtnTimeSubmit').on('click',function(){
+		event.preventDefault();
+		var scheduleNo = $('select.scheduleSelectList option:selected').data('no');
+		var time = $('#updateHour option:selected').val()+':'+$('#updateMin option:selected').val();
+		var date = $('.dayList option:selected').val();
+		var day = $('.dayList option:selected').data('day');
+		alert('scheduleNo : '+scheduleNo+' / time : '+time+' / date : '+date+' / day : '+day);
+		if(time==null || date ==null || day==null){ // 입력값 검증 
+			swal("Failed!", "모든 정보를 기입해 주세요", "error"); 
+			return;
+		}
+		$.getJSON(nodeUrl+':8890/scheduler/checkTime.do?scheduleNo='+scheduleNo+'&day='+day+'&time='+time, function(result){
+			if(result.status=='exist'){
+//				$('.control-label').remove();
+//				$('div.form-group').append('<label class="control-label" for="inputError1">중복된 시간입니다.</label>');
+//				$('div.form-group').addClass('has-error');
+			} else {
+				$.getJSON(reizenUrl+'scheduler/addRoute.do?location.contentId='+spot_cid+'&travelSequence='+9999+'&time='+date+' '+time+'&scheduleNo='+scheduleNo+'&day='+day+'&currentDate='+date, function(result){
+					if(result.status=='success'){
+						$('#addSpot-popup').popup('close');
+						swal({   
+							title: "일정 추가 성공",   
+							type: "success"
+							}); // swal
+						}else{
+							swal("Failed!", "일정 추가 실패. 관리자에게 문의하세요. ", "error"); 
+						} //else
+				}); //getJson
+			} //else
+		});
+	});
 });
 
 function loginCheck(){
